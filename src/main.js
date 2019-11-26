@@ -762,9 +762,9 @@ renderElement(siteMainElement, createFilmsSection());
 const films = siteMainElement.querySelector(`.films`);
 const filmsList = films.querySelector(`.films-list`);
 const filmsListContainer = filmsList.querySelector(`.films-list__container`);
-const filmsListExtra = films.querySelector(`.films-list--extra`);
-const filmsTopRatedContainer = filmsListExtra.querySelectorAll(`.films-list__container`)[0];
-const filmsMostCommentedContainer = filmsListExtra.querySelectorAll(`.films-list__container`)[1];
+const filmsListExtra = films.querySelectorAll(`.films-list--extra`);
+const filmsTopRatedContainer = filmsListExtra[0].querySelector(`.films-list__container`);
+const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list__container`);
 const body = document.querySelector(`body`);
 
 new Array(FILM_CARD_QUANTITY).fill(``).forEach(() => renderElement(filmsListContainer, createFilmCard()));

@@ -1,6 +1,4 @@
-import {getRandomValues} from 'utils.js';
-import {getRandomInteger} from 'utils.js';
-import {createRandomValues} from 'utils.js';
+import {getRandomValues, getRandomInteger, createRandomValues} from './utils.js';
 
 const filmsNames = [
   `Побег из Шоушенка`,
@@ -81,7 +79,7 @@ const generateFilmCard = () => {
     year: getRandomInteger(years.MIN, years.MAX),
     duration: getRandomInteger(duration.HOURS_MIN, duration.HOURS_MAX) + `h ` + getRandomInteger(duration.MINUTES_MIN, duration.MINUTES_MAX) + `m`,
     genre: getRandomValues(filmsGenres),
-    image: `././public/images/posters/` + getRandomValues(filmsImages),
+    image: `./images/posters/` + getRandomValues(filmsImages),
     description: createRandomValues(filmsDescriptions),
     comments: getRandomInteger(commentsCount.MIN, commentsCount.MAX) + ` comments`
   };

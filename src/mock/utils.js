@@ -11,7 +11,7 @@ const getRandomValues = (array) => { // возвращает случайное 
 const createRandomValues = function (values) {
   const valueNumbers = []; // создаем массив с номерами опций
   const valuesQuantity = getRandomInteger(0, values.length); // сгенерировали количество опций
-  for (const i = 0; i < valuesQuantity; i++) { // запускаем цикл с количеством итераций равным количеству запланированных опций
+  for (let i = 0; i < valuesQuantity; i++) { // запускаем цикл с количеством итераций равным количеству запланированных опций
     while (valueNumbers.length < valuesQuantity) { // бесконечный цикл, который прерывается только, когда мы наполним свой массив достаточным количеством опций
       const valueNumber = getRandomInteger(0, values.length - 1); // Создаем случайный индекс для массива опций
       // По этому индексу ищем элемент массива values .Если в нашем массиве valueNumbers

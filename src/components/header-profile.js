@@ -1,7 +1,7 @@
 import {generateProfileRating} from '../mock/user-profile.js';
 
 export const getHeaderProfile = () => {
-  const rating = generateProfileRating;
+  const rating = generateProfileRating();
   return (
     `
     <section class="header__profile profile">

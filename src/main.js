@@ -6,6 +6,7 @@ import {createFilmsSection} from './components/films-section.js';
 import {createFilmDetailsPopup} from './components/film-details-popup.js';
 import {createShowMoreButton} from './components/show-more-button.js';
 import {generateFilmCards} from './mock/film-card-object.js';
+import {generateComment, generateComments} from './mock/film-card-object.js';
 
 const FILM_LIST_CARD_QUANTITY = 15;
 const FILM_CARD_QUANTITY = 5;
@@ -35,6 +36,9 @@ const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list
 const body = document.querySelector(`body`);
 
 const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
+const comments = generateComments(films.commentsCount);
+console.log(films)
+console.log(films.commentsCount)
 
 let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)

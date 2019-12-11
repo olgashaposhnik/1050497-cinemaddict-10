@@ -55,6 +55,21 @@ const filmsRatings = {
   MAX: 10
 };
 
+const months = [
+  `January`,
+  `February`,
+  `March`,
+  `April`,
+  `May`,
+  `June`,
+  `July`,
+  `August`,
+  `September`,
+  `October`,
+  `November`,
+  `December`
+];
+
 const years = {
   MIN: 1929,
   MAX: 2019
@@ -72,16 +87,84 @@ const commentsCount = {
   MAX: 100
 };
 
+const filmsAttributes = [
+  `In Watchlist`,
+  `In History`,
+  `In Favourites`
+];
+
+const commentsText = [
+  `Interesting setting and a good cast`,
+  `Booooooooooring`,
+  `Very very old. Meh`,
+  `Almost two hours? Seriously?`,
+  `Great!!!`,
+  `Masterpiece`
+];
+
+const commentsEmoji = [
+  `angry`,
+  `puke`,
+  `sleeping`,
+  `smile`,
+  `trophy`
+];
+
+const commentAuthor = [
+  `James Smith`,
+  `Michael Smith`,
+  `Robert Smith`,
+  `Maria Garcia`,
+  `David Smith`,
+  `Maria Rodriguez`,
+  `Mary Smith`,
+  `Maria Hernandez`
+];
+
+const date = {
+  MIN_YEAR: 2000,
+  MAX_YEAR: 2019,
+  MIN_MONTH: 1,
+  MAX_MONTH: 12,
+  MIN_DAY: 1,
+  MAX_DAY: 31,
+  MIN_HOUR: 0,
+  MAX_HOUR: 23,
+  MIN_MINUTE: 0,
+  MAX_MINUTE: 59
+};
+
+
+const generateComment = () => {
+  return {
+    text: getRandomValues(commentsText),
+    emoji: `./images/emoji/` + getRandomValues(commentsEmoji) + `.png`,
+    author: getRandomValues(commentAuthor),
+    date: getRandomInteger(date.MIN_YEAR, date.MAX_YEAR) + `/` + getRandomInteger(date.MIN_MONTH, date.MAX_MONTH) + `/` + getRandomInteger(date.MIN_DAY, date.MAX_DAY) + ` ` + getRandomInteger(date.MIN_HOUR, date.MAX_HOUR) + `:` + getRandomInteger(date.MIN_MINUTE, date.MAX_MINUTE)
+  };
+};
+
+const generateComments = (count) => {
+  return new Array(count)
+    .fill(``)
+    .map(generateComment);
+};
+
 const generateFilmCard = () => {
   return {
     title: getRandomValues(filmsNames),
     rating: getRandomInteger(filmsRatings.MIN, filmsRatings.MAX),
     year: getRandomInteger(years.MIN, years.MAX),
     duration: getRandomInteger(duration.HOURS_MIN, duration.HOURS_MAX) + `h ` + getRandomInteger(duration.MINUTES_MIN, duration.MINUTES_MAX) + `m`,
-    genre: getRandomValues(filmsGenres),
+    genres: createRandomValues(filmsGenres, 1, 3),
     image: `./images/posters/` + getRandomValues(filmsImages),
-    description: createRandomValues(filmsDescriptions),
-    comments: getRandomInteger(commentsCount.MIN, commentsCount.MAX) + ` comments`
+    description: createRandomValues(filmsDescriptions, 1, 3),
+    commentsCount: getRandomInteger(commentsCount.MIN, commentsCount.MAX),
+    attributes: createRandomValues(filmsAttributes, 0, 3),
+    comments: generateComments(commentsCount),
+    writers: createRandomValues(commentAuthor, 1, 3),
+    actors: createRandomValues(commentAuthor, 1, 3),
+    releaseDate: getRandomInteger(date.MIN_DAY, date.MAX_DAY) + ` ` + getRandomValues(months) + ` `
   };
 };
 
@@ -91,4 +174,4 @@ const generateFilmCards = (count) => {
     .map(generateFilmCard);
 };
 
-export {generateFilmCard, generateFilmCards};
+export {generateFilmCard, generateFilmCards, generateComment, generateComments};

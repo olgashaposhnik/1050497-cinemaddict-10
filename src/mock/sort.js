@@ -11,4 +11,18 @@ const generateSorters = () => {
   });
 };
 
-export {generateSorters};
+const sortFilmsByOptions = (array) => {
+  array.sort((options) => array.attributes.includes(options));
+  return array.length;
+};
+
+const sortFilmsByDate = (array) => {
+  array.sort((a, b) => a.year - b.year);
+};
+
+const sortFilmsByRating = (array) => {
+  array.sort((a, b) => b.rating - a.rating);
+};
+
+export {generateSorters, sortFilmsByDate, sortFilmsByRating, sortFilmsByOptions};
+

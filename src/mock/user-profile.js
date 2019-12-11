@@ -1,8 +1,8 @@
 import {getRandomInteger} from './utils.js';
 
-const filnCount = {
+const filmCount = {
   MIN: 0,
-  MAX: Infinity
+  MAX: 50
 };
 
 const userRatings = {
@@ -13,7 +13,7 @@ const userRatings = {
 };
 
 const generateProfileRating = () => {
-  const profileRating = getRandomInteger(filnCount.MIN, filnCount.MAX);
+  const profileRating = getRandomInteger(filmCount.MIN, filmCount.MAX);
   if (profileRating === 0) {
     return userRatings.NO_RATING;
   } else if (profileRating > 0 && profileRating < 10) {

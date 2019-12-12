@@ -52,7 +52,7 @@ const filmsGenres = [
 
 const filmsRatings = {
   MIN: 0,
-  MAX: 10
+  MAX: 9
 };
 
 const months = [
@@ -84,7 +84,7 @@ const duration = {
 
 const commentsCount = {
   MIN: 0,
-  MAX: 100
+  MAX: 30
 };
 
 const filmsAttributes = [
@@ -153,15 +153,15 @@ const generateComments = (count) => {
 const generateFilmCard = () => {
   return {
     title: getRandomValues(filmsNames),
-    rating: getRandomInteger(filmsRatings.MIN, filmsRatings.MAX),
+    rating: getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) + getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) / 10,
     year: getRandomInteger(years.MIN, years.MAX),
     duration: getRandomInteger(duration.HOURS_MIN, duration.HOURS_MAX) + `h ` + getRandomInteger(duration.MINUTES_MIN, duration.MINUTES_MAX) + `m`,
     genres: createRandomValues(filmsGenres, 1, 3),
     image: `./images/posters/` + getRandomValues(filmsImages),
     description: createRandomValues(filmsDescriptions, 1, 3),
-    commentsCount: getRandomInteger(commentsCount.MIN, commentsCount.MAX),
     attributes: createRandomValues(filmsAttributes, 0, 3),
-    comments: generateComments(commentsCount),
+    comments: generateComments(getRandomInteger(commentsCount.MIN, commentsCount.MAX)),
+    director: getRandomValues(commentAuthor),
     writers: createRandomValues(commentAuthor, 1, 3),
     actors: createRandomValues(commentAuthor, 1, 3),
     releaseDate: getRandomInteger(date.MIN_DAY, date.MAX_DAY) + ` ` + getRandomValues(months) + ` `

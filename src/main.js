@@ -13,6 +13,7 @@ const FILM_CARD_QUANTITY = 5;
 // const SHOWING_FILMS_QUANTITY_BY_BUTTON = 5;
 const TOP_RATED_MOVIES_QUANTITY = 2;
 const MOST_COMMENTED_MOVIES_QUANTITY = 2;
+const POPUP_QUANTITY = 1;
 const ESC_KEYCODE = 27;
 
 const renderElement = (container, markup, position = `beforeend`) => {
@@ -36,9 +37,7 @@ const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list
 const body = document.querySelector(`body`);
 
 const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
-const comments = generateComments(films.commentsCount);
 console.log(films)
-console.log(films.commentsCount)
 
 let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)
@@ -58,12 +57,18 @@ films.slice(0, mostCommentedFilms)
     renderElement(filmsMostCommentedContainer, createFilmCard(film));
   });
 
+let popup = POPUP_QUANTITY; // создаем попап
+films.slice(0, popup)
+  .forEach((film) => {
+    renderElement(body, createFilmDetailsPopup(film));
+  });
+
 
 // new Array(FILM_CARD_QUANTITY).fill(``).forEach(() => renderElement(filmsListContainer, createFilmCard()));
 // new Array(TOP_RATED_MOVIES_QUANTITY).fill(``).forEach(() => renderElement(filmsTopRatedContainer, createFilmCard()));
 // new Array(MOST_COMMENTED_MOVIES_QUANTITY).fill(``).forEach(() => renderElement(filmsMostCommentedContainer, createFilmCard()));
 renderElement(filmsList, createShowMoreButton());
-renderElement(body, createFilmDetailsPopup());
+// renderElement(body, createFilmDetailsPopup());
 
 const showMoreButton = document.querySelector(`.film-details__close-btn`);
 

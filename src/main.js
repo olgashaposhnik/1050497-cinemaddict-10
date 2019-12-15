@@ -6,11 +6,10 @@ import {createFilmsSection} from './components/films-section.js';
 import {createFilmDetailsPopup} from './components/film-details-popup.js';
 import {createShowMoreButton} from './components/show-more-button.js';
 import {generateFilmCards} from './mock/film-card-object.js';
-import {generateComment, generateComments} from './mock/film-card-object.js';
 
 const FILM_LIST_CARD_QUANTITY = 15;
 const FILM_CARD_QUANTITY = 5;
-// const SHOWING_FILMS_QUANTITY_BY_BUTTON = 5;
+const SHOWING_FILMS_QUANTITY_BY_BUTTON = 5;
 const TOP_RATED_MOVIES_QUANTITY = 2;
 const MOST_COMMENTED_MOVIES_QUANTITY = 2;
 const POPUP_QUANTITY = 1;
@@ -23,8 +22,10 @@ const renderElement = (container, markup, position = `beforeend`) => {
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = document.querySelector(`.header`);
 
+const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
+
 renderElement(siteHeaderElement, getHeaderProfile());
-renderElement(siteMainElement, createSiteMenuTemplate());
+renderElement(siteMainElement, createSiteMenuTemplate(films));
 renderElement(siteMainElement, createSortTemplate());
 renderElement(siteMainElement, createFilmsSection());
 
@@ -36,7 +37,6 @@ const filmsTopRatedContainer = filmsListExtra[0].querySelector(`.films-list__con
 const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list__container`);
 const body = document.querySelector(`body`);
 
-const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
 console.log(films)
 
 let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
@@ -63,20 +63,15 @@ films.slice(0, popup)
     renderElement(body, createFilmDetailsPopup(film));
   });
 
-
-// new Array(FILM_CARD_QUANTITY).fill(``).forEach(() => renderElement(filmsListContainer, createFilmCard()));
-// new Array(TOP_RATED_MOVIES_QUANTITY).fill(``).forEach(() => renderElement(filmsTopRatedContainer, createFilmCard()));
-// new Array(MOST_COMMENTED_MOVIES_QUANTITY).fill(``).forEach(() => renderElement(filmsMostCommentedContainer, createFilmCard()));
 renderElement(filmsList, createShowMoreButton());
-// renderElement(body, createFilmDetailsPopup());
 
-const showMoreButton = document.querySelector(`.film-details__close-btn`);
+const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
 const closePopup = function () {
   const activeFilmCard = document.querySelector(`.film-card.active`); // не забыть присвоить такой класс потом
-  const popup = document.querySelector(`.film-details`);
-  if (popup) {
-    popup.remove();
+  const popupFilmCard = document.querySelector(`.film-details`);
+  if (popupFilmCard) {
+    popupFilmCard.remove();
     document.removeEventListener(`keydown`, onEscDown);
   }
   if (activeFilmCard) {
@@ -91,7 +86,20 @@ const onEscDown = function (evt) {
 };
 
 document.addEventListener(`keydown`, onEscDown);
-showMoreButton.addEventListener(`keydown`, onEscDown);
+closePopupButton.addEventListener(`keydown`, onEscDown);
+
+const showMoreButton = filmsListContainer.querySelector(`.films-list__show-more`);
+showMoreButton.addEventListener(`click`, () => {
+  const prevFilmsCount = showingFilms;
+  showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
+
+  films.slice(prevFilmsCount, showingFilms)
+    .forEach((film) => renderElement(filmsListContainer, createFilmCard(film)));
+
+  if (showingFilms >= films.length) {
+    showMoreButton.remove();
+  }
+});
 
 // ShowMoreButton.addEventListener(`click`, () => {
 //   const prevFilmsCount = showingFilms;

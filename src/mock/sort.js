@@ -12,7 +12,7 @@ const generateSorters = () => {
 };
 
 const sortFilmsByOptions = (array) => {
-  array.sort((options) => array.attributes.includes(options));
+  array.sort((attributes) => array.includes(attributes));
   return array.length;
 };
 

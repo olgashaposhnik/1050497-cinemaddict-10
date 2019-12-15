@@ -1,6 +1,7 @@
-// import {sortFilmsByOptions} from '../mock/sort.js';
+import {sortFilmsByOptions} from '../mock/sort.js';
 
-export const createSiteMenuTemplate = () => {
+export const createSiteMenuTemplate = (filmCard) => {
+  const {attributes} = filmCard;
   return (
     `
     <nav class="main-navigation">
@@ -14,6 +15,7 @@ export const createSiteMenuTemplate = () => {
   );
 };
 
+// ${sortFilmsByOptions(attributes)}
 // export const createSiteMenuTemplate = () => {
 //   return (
 //     `

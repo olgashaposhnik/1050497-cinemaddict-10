@@ -48,15 +48,15 @@ films.slice(0, showingFilms)
   });
 
 let topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг
-const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating).slice(0, topRatedFilms)
-// films.slice(0, topRatedFilms)
+const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating);
+topRatedFilmCards.slice(0, topRatedFilms)
   .forEach((film) => {
     renderElement(filmsTopRatedContainer, createFilmCard(film));
   });
 
 let mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
-const mostCommentedFilmCards = films.sort((a, b) => b.comments - a.comments).slice(0, mostCommentedFilms)
-films.slice(0, mostCommentedFilms)
+const mostCommentedFilmCards = films.sort((a, b) => b.comments.length - a.comments.length);
+mostCommentedFilmCards.slice(0, mostCommentedFilms)
   .forEach((film) => {
     renderElement(filmsMostCommentedContainer, createFilmCard(film));
   });

@@ -39,29 +39,27 @@ const filmsTopRatedContainer = filmsListExtra[0].querySelector(`.films-list__con
 const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list__container`);
 const body = document.querySelector(`body`);
 
-console.log(films)
-
-let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
+const showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)
   .forEach((film) => {
     renderElement(filmsListContainer, createFilmCard(film));
   });
 
-let topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг
+const topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг
 const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating);
 topRatedFilmCards.slice(0, topRatedFilms)
   .forEach((film) => {
     renderElement(filmsTopRatedContainer, createFilmCard(film));
   });
 
-let mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
+const mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
 const mostCommentedFilmCards = films.sort((a, b) => b.comments.length - a.comments.length);
 mostCommentedFilmCards.slice(0, mostCommentedFilms)
   .forEach((film) => {
     renderElement(filmsMostCommentedContainer, createFilmCard(film));
   });
 
-let popup = POPUP_QUANTITY; // создаем попап
+const popup = POPUP_QUANTITY; // создаем попап
 films.slice(0, popup)
   .forEach((film) => {
     renderElement(body, createFilmDetailsPopup(film));

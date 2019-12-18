@@ -88,9 +88,8 @@ const commentsCount = {
 };
 
 const filmsAttributes = [
-  `In Watchlist`,
-  `In History`,
-  `In Favourites`
+  `true`,
+  `false`
 ];
 
 const commentsText = [
@@ -159,7 +158,9 @@ const generateFilmCard = () => {
     genres: createRandomValues(filmsGenres, 1, 3),
     image: `./images/posters/` + getRandomValues(filmsImages),
     description: createRandomValues(filmsDescriptions, 1, 3),
-    attributes: createRandomValues(filmsAttributes, 0, 3),
+    inWatchlist: getRandomValues(filmsAttributes),
+    inHistory: getRandomValues(filmsAttributes),
+    inFavourites: getRandomValues(filmsAttributes),
     comments: generateComments(getRandomInteger(commentsCount.MIN, commentsCount.MAX)),
     director: getRandomValues(commentAuthor),
     writers: createRandomValues(commentAuthor, 1, 3),

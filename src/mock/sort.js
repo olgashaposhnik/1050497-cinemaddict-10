@@ -11,9 +11,9 @@ const generateSorters = () => {
   });
 };
 
-const sortFilmsByOptions = (array) => {
-  array.sort((attributes) => array.includes(attributes));
-  return array.length;
+const sortFilmsByOptions = (array, key) => {
+  const filteredArray = array.filter((item) => item[key] === `true`);
+  return filteredArray.length;
 };
 
 const sortFilmsByDate = (array) => {

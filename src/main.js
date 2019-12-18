@@ -5,6 +5,7 @@ import {createFilmCard} from './components/film-card.js';
 import {createFilmsSection} from './components/films-section.js';
 import {createFilmDetailsPopup} from './components/film-details-popup.js';
 import {createShowMoreButton} from './components/show-more-button.js';
+import {createFooter} from './components/footer.js';
 import {generateFilmCards} from './mock/film-card-object.js';
 
 const FILM_LIST_CARD_QUANTITY = 15;
@@ -21,6 +22,7 @@ const renderElement = (container, markup, position = `beforeend`) => {
 
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = document.querySelector(`.header`);
+const siteFooterElement = document.querySelector(`footer`);
 
 const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
 
@@ -46,12 +48,14 @@ films.slice(0, showingFilms)
   });
 
 let topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг
-films.slice(0, topRatedFilms)
+const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating).slice(0, topRatedFilms)
+// films.slice(0, topRatedFilms)
   .forEach((film) => {
     renderElement(filmsTopRatedContainer, createFilmCard(film));
   });
 
 let mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
+const mostCommentedFilmCards = films.sort((a, b) => b.comments - a.comments).slice(0, mostCommentedFilms)
 films.slice(0, mostCommentedFilms)
   .forEach((film) => {
     renderElement(filmsMostCommentedContainer, createFilmCard(film));
@@ -64,6 +68,7 @@ films.slice(0, popup)
   });
 
 renderElement(filmsList, createShowMoreButton());
+renderElement(siteFooterElement, createFooter(films));
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
@@ -88,7 +93,7 @@ const onEscDown = function (evt) {
 document.addEventListener(`keydown`, onEscDown);
 closePopupButton.addEventListener(`keydown`, onEscDown);
 
-const showMoreButton = filmsListContainer.querySelector(`.films-list__show-more`);
+const showMoreButton = document.querySelector(`.films-list__show-more`);
 showMoreButton.addEventListener(`click`, () => {
   const prevFilmsCount = showingFilms;
   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;

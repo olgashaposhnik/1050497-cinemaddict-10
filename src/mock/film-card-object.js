@@ -75,14 +75,14 @@ const years = {
   MAX: 2019
 };
 
-const duration = {
+const Duration = {
   HOURS_MIN: 1,
   HOURS_MAX: 2,
   MINUTES_MIN: 0,
   MINUTES_MAX: 59
 };
 
-const commentsCount = {
+const СommentsCount = {
   MIN: 0,
   MAX: 30
 };
@@ -120,7 +120,7 @@ const commentAuthor = [
   `Maria Hernandez`
 ];
 
-const date = {
+const Date = {
   MIN_YEAR: 2000,
   MAX_YEAR: 2019,
   MIN_MONTH: 1,
@@ -139,7 +139,7 @@ const generateComment = () => {
     text: getRandomValues(commentsText),
     emoji: `./images/emoji/` + getRandomValues(commentsEmoji) + `.png`,
     author: getRandomValues(commentAuthor),
-    date: getRandomInteger(date.MIN_YEAR, date.MAX_YEAR) + `/` + getRandomInteger(date.MIN_MONTH, date.MAX_MONTH) + `/` + getRandomInteger(date.MIN_DAY, date.MAX_DAY) + ` ` + getRandomInteger(date.MIN_HOUR, date.MAX_HOUR) + `:` + getRandomInteger(date.MIN_MINUTE, date.MAX_MINUTE)
+    date: getRandomInteger(Date.MIN_YEAR, Date.MAX_YEAR) + `/` + getRandomInteger(Date.MIN_MONTH, Date.MAX_MONTH) + `/` + getRandomInteger(Date.MIN_DAY, Date.MAX_DAY) + ` ` + getRandomInteger(Date.MIN_HOUR, Date.MAX_HOUR) + `:` + getRandomInteger(Date.MIN_MINUTE, Date.MAX_MINUTE)
   };
 };
 
@@ -154,18 +154,18 @@ const generateFilmCard = () => {
     title: getRandomValues(filmsNames),
     rating: getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) + getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) / 10,
     year: getRandomInteger(years.MIN, years.MAX),
-    duration: getRandomInteger(duration.HOURS_MIN, duration.HOURS_MAX) + `h ` + getRandomInteger(duration.MINUTES_MIN, duration.MINUTES_MAX) + `m`,
+    duration: getRandomInteger(Duration.HOURS_MIN, Duration.HOURS_MAX) + `h ` + getRandomInteger(Duration.MINUTES_MIN, Duration.MINUTES_MAX) + `m`,
     genres: createRandomValues(filmsGenres, 1, 3),
     image: `./images/posters/` + getRandomValues(filmsImages),
     description: createRandomValues(filmsDescriptions, 1, 3),
     inWatchlist: getRandomValues(filmsAttributes),
     inHistory: getRandomValues(filmsAttributes),
     inFavourites: getRandomValues(filmsAttributes),
-    comments: generateComments(getRandomInteger(commentsCount.MIN, commentsCount.MAX)),
+    comments: generateComments(getRandomInteger(СommentsCount.MIN, СommentsCount.MAX)),
     director: getRandomValues(commentAuthor),
     writers: createRandomValues(commentAuthor, 1, 3),
     actors: createRandomValues(commentAuthor, 1, 3),
-    releaseDate: getRandomInteger(date.MIN_DAY, date.MAX_DAY) + ` ` + getRandomValues(months) + ` `
+    releaseDate: getRandomInteger(Date.MIN_DAY, Date.MAX_DAY) + ` ` + getRandomValues(months) + ` `
   };
 };
 

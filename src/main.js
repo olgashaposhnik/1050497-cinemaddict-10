@@ -39,7 +39,7 @@ const filmsTopRatedContainer = filmsListExtra[0].querySelector(`.films-list__con
 const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list__container`);
 const body = document.querySelector(`body`);
 
-const showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
+let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)
   .forEach((film) => {
     renderElement(filmsListContainer, createFilmCard(film));
@@ -59,8 +59,7 @@ mostCommentedFilmCards.slice(0, mostCommentedFilms)
     renderElement(filmsMostCommentedContainer, createFilmCard(film));
   });
 
-const popup = POPUP_QUANTITY; // создаем попап
-films.slice(0, popup)
+films.slice(0, POPUP_QUANTITY)
   .forEach((film) => {
     renderElement(body, createFilmDetailsPopup(film));
   });
@@ -70,7 +69,7 @@ renderElement(siteFooterElement, createFooter(films));
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
-const closePopup = function () {
+const closePopup = () => {
   const activeFilmCard = document.querySelector(`.film-card.active`); // не забыть присвоить такой класс потом
   const popupFilmCard = document.querySelector(`.film-details`);
   if (popupFilmCard) {
@@ -82,7 +81,7 @@ const closePopup = function () {
   }
 };
 
-const onEscDown = function (evt) {
+const onEscDown = (evt) => {
   if (evt.keyCode === ESC_KEYCODE) {
     closePopup();
   }
@@ -93,7 +92,7 @@ closePopupButton.addEventListener(`keydown`, onEscDown);
 
 const showMoreButton = document.querySelector(`.films-list__show-more`);
 showMoreButton.addEventListener(`click`, () => {
-  const prevFilmsCount = showingFilms;
+  let prevFilmsCount = showingFilms;
   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
   films.slice(prevFilmsCount, showingFilms)
@@ -103,16 +102,3 @@ showMoreButton.addEventListener(`click`, () => {
     showMoreButton.remove();
   }
 });
-
-// ShowMoreButton.addEventListener(`click`, () => {
-//   const prevFilmsCount = showingFilms;
-//   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
-
-//   films.slice(prevFilmsCount, showingFilms)
-//     .forEach((film) => renderTask(taskListElement, film));
-
-//   if (showingTasksCount >= tasks.length) {
-//     loadMoreButtonComponent.getElement().remove();
-//     loadMoreButtonComponent.removeElement();
-//   }
-// });

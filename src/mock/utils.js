@@ -1,5 +1,5 @@
 const getRandomInteger = (min, max) => { // возвращает случайное целое число от min до (max+1)
-  let rand = min + Math.random() * (max + 1 - min);
+  const rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
 };
 

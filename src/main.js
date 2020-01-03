@@ -3,9 +3,9 @@ import SiteMenuComponent from './components/menu.js';
 import SortComponent from './components/sort.js';
 import FilmCardComponent from './components/film-card.js';
 import FilmsSectionComponent from './components/films-section.js';
-import {createFilmDetailsPopup} from './components/film-details-popup.js';
-import {createShowMoreButton} from './components/show-more-button.js';
-import {createFooter} from './components/footer.js';
+import FilmDetailsPopupComponent from './components/film-details-popup.js';
+import ShowMoreButtonComponent from './components/show-more-button.js';
+import FooterComponent from './components/footer.js';
 import {generateFilmCards} from './mock/film-card-object.js';
 import {render/* , RenderPosition*/} from './mock/utils.js';
 
@@ -50,23 +50,23 @@ const topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточ�
 const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating);
 topRatedFilmCards.slice(0, topRatedFilms)
   .forEach((film) => {
-    render(filmsTopRatedContainer, createFilmCard(film), `beforeend`);
+    render(filmsTopRatedContainer, new FilmCardComponent(film), `beforeend`);
   });
 
 const mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
 const mostCommentedFilmCards = films.sort((a, b) => b.comments.length - a.comments.length);
 mostCommentedFilmCards.slice(0, mostCommentedFilms)
   .forEach((film) => {
-    render(filmsMostCommentedContainer, createFilmCard(film), `beforeend`);
+    render(filmsMostCommentedContainer, new FilmCardComponent(film), `beforeend`);
   });
 
 films.slice(0, POPUP_QUANTITY)
   .forEach((film) => {
-    render(body, createFilmDetailsPopup(film), `beforeend`);
+    render(body, new FilmDetailsPopupComponent(film), `beforeend`);
   });
 
-render(filmsList, createShowMoreButton(), `beforeend`);
-render(siteFooterElement, createFooter(films), `beforeend`);
+render(filmsList, new ShowMoreButtonComponent(), `beforeend`);
+render(siteFooterElement, new FooterComponent(), `beforeend`);
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
@@ -97,7 +97,7 @@ showMoreButton.addEventListener(`click`, () => {
   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
   films.slice(prevFilmsCount, showingFilms)
-    .forEach((film) => render(filmsListContainer, createFilmCard(film), `beforeend`));
+    .forEach((film) => render(filmsListContainer, new FilmCardComponent(film), `beforeend`));
 
   if (showingFilms >= films.length) {
     showMoreButton.remove();

@@ -1,4 +1,6 @@
-export const createFilmCard = (filmСard) => {
+import {createElement} from '../mock//utils.js';
+
+const createFilmCard = (filmСard) => {
   const {title, rating, year, duration, genre, image, description, comments} = filmСard;
   return (
     `
@@ -22,3 +24,27 @@ export const createFilmCard = (filmСard) => {
   `
   );
 };
+
+export default class FilmCard {
+  constructor(filmСard) {
+    this._filmСard = filmСard;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCard(this._filmСard);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

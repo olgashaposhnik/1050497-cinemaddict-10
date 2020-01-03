@@ -1,4 +1,6 @@
-export const createFooter = (filmСards) => {
+import {createElement} from '../mock//utils.js';
+
+const createFooter = (filmСards) => {
   return (
     `
     <section class="footer__logo logo logo--smaller">Cinemaddict</section>
@@ -8,3 +10,27 @@ export const createFooter = (filmСards) => {
   `
   );
 };
+
+export default class Footer {
+  constructor(filmСards) {
+    this._filmСards = filmСards;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFooter(this._filmСards);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

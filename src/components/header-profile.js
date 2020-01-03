@@ -1,6 +1,7 @@
+import {createElement} from '../mock//utils.js';
 import {generateProfileRating} from '../mock/user-profile.js';
 
-export const getHeaderProfile = () => {
+const getHeaderProfile = () => {
   const rating = generateProfileRating();
   return (
     `
@@ -12,3 +13,24 @@ export const getHeaderProfile = () => {
   );
 };
 
+export default class HeaderProfile {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return getHeaderProfile();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

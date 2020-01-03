@@ -1,6 +1,7 @@
+import {createElement} from '../mock//utils.js';
 import {createCommentsMarkup} from './comments.js';
 
-export const createFilmDetailsPopup = (filmСard) => {
+const createFilmDetailsPopup = (filmСard) => {
   const {title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate} = filmСard;
   return (
     `
@@ -126,3 +127,26 @@ export const createFilmDetailsPopup = (filmСard) => {
   );
 };
 
+export default class FilmDetailsPopup {
+  constructor(filmСard) {
+    this._filmСard = filmСard;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsPopup(this._filmСard);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

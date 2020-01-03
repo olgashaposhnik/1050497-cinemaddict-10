@@ -1,4 +1,6 @@
-export const createCommentsMarkup = (items) => {
+import {createElement} from '../mock//utils.js';
+
+const createCommentsMarkup = (items) => {
   return items
     .map((item) => {
       return (
@@ -19,3 +21,27 @@ export const createCommentsMarkup = (items) => {
     })
     .join(``);
 };
+
+export default class Comments {
+  constructor(items) {
+    this._items = items;
+
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCommentsMarkup(this._items);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

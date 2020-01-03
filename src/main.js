@@ -1,12 +1,13 @@
-import {getHeaderProfile} from './components/header-profile.js';
-import {createSiteMenuTemplate} from './components/menu.js';
-import {createSortTemplate} from './components/sort.js';
-import {createFilmCard} from './components/film-card.js';
-import {createFilmsSection} from './components/films-section.js';
+import HeaderProfileComponent from './components/header-profile.js';
+import SiteMenuComponent from './components/menu.js';
+import SortComponent from './components/sort.js';
+import FilmCardComponent from './components/film-card.js';
+import FilmsSectionComponent from './components/films-section.js';
 import {createFilmDetailsPopup} from './components/film-details-popup.js';
 import {createShowMoreButton} from './components/show-more-button.js';
 import {createFooter} from './components/footer.js';
 import {generateFilmCards} from './mock/film-card-object.js';
+import {render/* , RenderPosition*/} from './mock/utils.js';
 
 const FILM_LIST_CARD_QUANTITY = 15;
 const FILM_CARD_QUANTITY = 5;
@@ -16,20 +17,20 @@ const MOST_COMMENTED_MOVIES_QUANTITY = 2;
 const POPUP_QUANTITY = 1;
 const ESC_KEYCODE = 27;
 
-const renderElement = (container, markup, position = `beforeend`) => {
-  container.insertAdjacentHTML(position, markup);
-};
-
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = document.querySelector(`.header`);
 const siteFooterElement = document.querySelector(`footer`);
 
 const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
 
-renderElement(siteHeaderElement, getHeaderProfile());
-renderElement(siteMainElement, createSiteMenuTemplate(films));
-renderElement(siteMainElement, createSortTemplate());
-renderElement(siteMainElement, createFilmsSection());
+const headerProfile = new HeaderProfileComponent();
+const siteMenu = new SiteMenuComponent();
+const sort = new SortComponent();
+const filmsSectionCreated = new FilmsSectionComponent();
+render(siteHeaderElement, headerProfile.getElement(), `beforeend`);
+render(siteMainElement, siteMenu.getElement(), `beforeend`);
+render(siteMainElement, sort.getElement(), `beforeend`);
+render(siteMainElement, filmsSectionCreated.getElement(), `beforeend`);
 
 const filmsSection = siteMainElement.querySelector(`.films`);
 const filmsList = filmsSection.querySelector(`.films-list`);
@@ -42,30 +43,30 @@ const body = document.querySelector(`body`);
 let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)
   .forEach((film) => {
-    renderElement(filmsListContainer, createFilmCard(film));
+    render(filmsListContainer, new FilmCardComponent(film), `beforeend`);
   });
 
 const topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг
 const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating);
 topRatedFilmCards.slice(0, topRatedFilms)
   .forEach((film) => {
-    renderElement(filmsTopRatedContainer, createFilmCard(film));
+    render(filmsTopRatedContainer, createFilmCard(film), `beforeend`);
   });
 
 const mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
 const mostCommentedFilmCards = films.sort((a, b) => b.comments.length - a.comments.length);
 mostCommentedFilmCards.slice(0, mostCommentedFilms)
   .forEach((film) => {
-    renderElement(filmsMostCommentedContainer, createFilmCard(film));
+    render(filmsMostCommentedContainer, createFilmCard(film), `beforeend`);
   });
 
 films.slice(0, POPUP_QUANTITY)
   .forEach((film) => {
-    renderElement(body, createFilmDetailsPopup(film));
+    render(body, createFilmDetailsPopup(film), `beforeend`);
   });
 
-renderElement(filmsList, createShowMoreButton());
-renderElement(siteFooterElement, createFooter(films));
+render(filmsList, createShowMoreButton(), `beforeend`);
+render(siteFooterElement, createFooter(films), `beforeend`);
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
@@ -96,7 +97,7 @@ showMoreButton.addEventListener(`click`, () => {
   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
   films.slice(prevFilmsCount, showingFilms)
-    .forEach((film) => renderElement(filmsListContainer, createFilmCard(film)));
+    .forEach((film) => render(filmsListContainer, createFilmCard(film), `beforeend`));
 
   if (showingFilms >= films.length) {
     showMoreButton.remove();

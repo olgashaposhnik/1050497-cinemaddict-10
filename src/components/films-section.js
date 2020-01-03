@@ -1,4 +1,6 @@
-export const createFilmsSection = () => {
+import {createElement} from '../mock//utils.js';
+
+const createFilmsSection = () => {
   return (
     `
     <section class="films">
@@ -17,3 +19,25 @@ export const createFilmsSection = () => {
   `
   );
 };
+
+export default class FilmsSection {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmsSection();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

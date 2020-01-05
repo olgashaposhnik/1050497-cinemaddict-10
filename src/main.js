@@ -24,15 +24,17 @@ const siteFooterElement = document.querySelector(`footer`);
 const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
 
 const headerProfile = new HeaderProfileComponent();
-const siteMenu = new SiteMenuComponent();
+const siteMenu = new SiteMenuComponent(films);
 const sort = new SortComponent();
 const filmsSectionCreated = new FilmsSectionComponent();
+console.log(filmsSectionCreated)
 render(siteHeaderElement, headerProfile.getElement(), `beforeend`);
 render(siteMainElement, siteMenu.getElement(), `beforeend`);
 render(siteMainElement, sort.getElement(), `beforeend`);
 render(siteMainElement, filmsSectionCreated.getElement(), `beforeend`);
 
 const filmsSection = siteMainElement.querySelector(`.films`);
+console.log(siteMainElement)
 const filmsList = filmsSection.querySelector(`.films-list`);
 const filmsListContainer = filmsList.querySelector(`.films-list__container`);
 const filmsListExtra = filmsSection.querySelectorAll(`.films-list--extra`);
@@ -66,7 +68,7 @@ films.slice(0, POPUP_QUANTITY)
   });
 
 render(filmsList, new ShowMoreButtonComponent(), `beforeend`);
-render(siteFooterElement, new FooterComponent(), `beforeend`);
+render(siteFooterElement, new FooterComponent(films), `beforeend`);
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 

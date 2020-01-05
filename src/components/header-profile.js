@@ -14,7 +14,9 @@ const getHeaderProfile = () => {
 };
 
 export default class HeaderProfile {
-  constructor() {
+  constructor(rating) {
+    this._rating = rating;
+
     this._element = null;
   }
 

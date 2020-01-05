@@ -1,15 +1,15 @@
 import {createElement} from '../mock//utils.js';
 
-const createFooter = (filmСards) => {
-  return (
-    `
-    <section class="footer__logo logo logo--smaller">Cinemaddict</section>
-    <section class="footer__statistics">
-    <p>${filmСards.length} movies inside</p>
-    </section>
-  `
-  );
-};
+// const createFooter = (filmСards) => {
+//   return (
+//     `
+//     <section class="footer__logo logo logo--smaller">Cinemaddict</section>
+//     <section class="footer__statistics">
+//     <p>${filmСards.length} movies inside</p>
+//     </section>
+//   `
+//   );
+// };
 
 export default class Footer {
   constructor(filmСards) {
@@ -19,7 +19,14 @@ export default class Footer {
   }
 
   getTemplate() {
-    return createFooter(this._filmСards);
+    return (
+      `
+      <section class="footer__logo logo logo--smaller">Cinemaddict</section>
+      <section class="footer__statistics">
+      <p>${this._length} movies inside</p>
+      </section>
+    `
+    ).trim();
   }
 
   getElement() {

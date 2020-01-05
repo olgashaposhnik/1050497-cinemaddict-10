@@ -1,16 +1,16 @@
 import {createElement} from '../mock//utils.js';
 
-const createSortTemplate = () => {
-  return (
-    `
-    <ul class="sort">
-      <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-      <li><a href="#" class="sort__button">Sort by date</a></li>
-      <li><a href="#" class="sort__button">Sort by rating</a></li>
-    </ul>
-    `
-  );
-};
+// const createSortTemplate = () => {
+//   return (
+//     `
+//     <ul class="sort">
+//       <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
+//       <li><a href="#" class="sort__button">Sort by date</a></li>
+//       <li><a href="#" class="sort__button">Sort by rating</a></li>
+//     </ul>
+//     `
+//   );
+// };
 
 export default class Sort {
   constructor() {
@@ -18,7 +18,15 @@ export default class Sort {
   }
 
   getTemplate() {
-    return createSortTemplate();
+    return (
+      `
+      <ul class="sort">
+        <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
+        <li><a href="#" class="sort__button">Sort by date</a></li>
+        <li><a href="#" class="sort__button">Sort by rating</a></li>
+      </ul>
+      `
+    ).trim();
   }
 
   getElement() {

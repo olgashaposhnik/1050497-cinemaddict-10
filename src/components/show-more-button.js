@@ -1,12 +1,12 @@
 import {createElement} from '../mock//utils.js';
 
-const createShowMoreButton = () => {
-  return (
-    `
-    <button class="films-list__show-more">Show more</button>
-    `
-  );
-};
+// const createShowMoreButton = () => {
+//   return (
+//     `
+//     <button class="films-list__show-more">Show more</button>
+//     `
+//   );
+// };
 
 export default class ShowMoreButton {
   constructor() {
@@ -14,7 +14,11 @@ export default class ShowMoreButton {
   }
 
   getTemplate() {
-    return createShowMoreButton();
+    return (
+      `
+      <button class="films-list__show-more">Show more</button>
+      `
+    ).trim();
   }
 
   getElement() {

@@ -64,11 +64,11 @@ mostCommentedFilmCards.slice(0, mostCommentedFilms)
 
 films.slice(0, POPUP_QUANTITY)
   .forEach((film) => {
-    render(body, new FilmDetailsPopupComponent(film), `beforeend`);
+    render(body, new FilmDetailsPopupComponent(film).getElement(), `beforeend`);
   });
 
-render(filmsList, new ShowMoreButtonComponent(), `beforeend`);
-render(siteFooterElement, new FooterComponent(films), `beforeend`);
+render(filmsList, new ShowMoreButtonComponent().getElement(), `beforeend`);
+render(siteFooterElement, new FooterComponent(films).getElement(), `beforeend`);
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
@@ -91,17 +91,17 @@ const onEscDown = (evt) => {
 };
 
 document.addEventListener(`keydown`, onEscDown);
-// closePopupButton.addEventListener(`keydown`, onEscDown);
+closePopupButton.addEventListener(`keydown`, onEscDown);
 
-// const showMoreButton = document.querySelector(`.films-list__show-more`);
-// showMoreButton.addEventListener(`click`, () => {
-//   let prevFilmsCount = showingFilms;
-//   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
+const showMoreButton = document.querySelector(`.films-list__show-more`);
+showMoreButton.addEventListener(`click`, () => {
+  let prevFilmsCount = showingFilms;
+  showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
-//   films.slice(prevFilmsCount, showingFilms)
-//     .forEach((film) => render(filmsListContainer, new FilmCardComponent(film), `beforeend`));
+  films.slice(prevFilmsCount, showingFilms)
+    .forEach((film) => render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`));
 
-//   if (showingFilms >= films.length) {
-//     showMoreButton.remove();
-//   }
-// });
+  if (showingFilms >= films.length) {
+    showMoreButton.remove();
+  }
+});

@@ -15,8 +15,8 @@ import {createElement} from '../mock//utils.js';
 // };
 
 export default class SiteMenu {
-  constructor(filmСards) {
-    this._filmСards = filmСards;
+  constructor(filmCards) {
+    this._filmCards = filmCards;
 
     this._element = null;
   }

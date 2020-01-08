@@ -27,14 +27,11 @@ const headerProfile = new HeaderProfileComponent();
 const siteMenu = new SiteMenuComponent(films);
 const sort = new SortComponent();
 const filmsSection = new FilmsSectionComponent().getElement();
-// console.log(filmsSectionCreated)
 render(siteHeaderElement, headerProfile.getElement(), `beforeend`);
 render(siteMainElement, siteMenu.getElement(), `beforeend`);
 render(siteMainElement, sort.getElement(), `beforeend`);
 render(siteMainElement, filmsSection, `beforeend`);
 
-// console.log(siteMainElement)
-console.log(filmsSection)
 const filmsList = filmsSection.querySelector(`.films-list`);
 const filmsListContainer = filmsList.querySelector(`.films-list__container`);
 const filmsListExtra = filmsSection.querySelectorAll(`.films-list--extra`);
@@ -42,10 +39,46 @@ const filmsTopRatedContainer = filmsListExtra[0].querySelector(`.films-list__con
 const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list__container`);
 const body = document.querySelector(`body`);
 
+const renderFilm = (film) => {
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+    if (isEscKey) {
+      replacePopupToFilmsList();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  const replacePopupToFilmsList = () => {
+    document.replaceChild(FilmDetailsPopupComponent.getElement(), FilmCardComponent.getElement());
+  };
+
+  const replaceFilmsListToPopup = () => {
+    document.replaceChild(FilmCardComponent.getElement(), FilmDetailsPopupComponent.getElement());
+  };
+
+  const filmDetailsPopupComponent = new FilmDetailsPopupComponent(film);
+  const closePopupButton = filmDetailsPopupComponent.getElement().querySelector(`.film-details__close-btn`);
+
+  closePopupButton.addEventListener(`click`, () => {
+    replacePopupToFilmsList();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+
+  const filmCardComponent = new FilmCardComponent(film);
+  filmCardComponent.addEventListener(`click`, () => {
+    replaceFilmsListToPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+
+  render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`);
+};
+
+
 let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)
   .forEach((film) => {
-    render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`);
+    renderFilm(film);
+    // render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`);
   });
 
 const topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг

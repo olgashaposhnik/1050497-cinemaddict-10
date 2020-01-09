@@ -29,8 +29,8 @@ export default class Comments {
     this._element = null;
   }
 
-  getTemplate(items) {
-    return items
+  getTemplate() {
+    return this._items
     .map((item) => {
       return (
         `<li class="film-details__comment">

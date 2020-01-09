@@ -7,7 +7,7 @@ import FilmDetailsPopupComponent from './components/film-details-popup.js';
 import ShowMoreButtonComponent from './components/show-more-button.js';
 import FooterComponent from './components/footer.js';
 import {generateFilmCards} from './mock/film-card-object.js';
-import {render/* , RenderPosition*/} from './mock/utils.js';
+import {render, RenderPosition} from './mock/utils.js';
 
 const FILM_LIST_CARD_QUANTITY = 15;
 const FILM_CARD_QUANTITY = 5;
@@ -19,7 +19,6 @@ const ESC_KEYCODE = 27;
 
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = document.querySelector(`.header`);
-const siteFooterElement = document.querySelector(`footer`);
 
 const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
 
@@ -27,10 +26,10 @@ const headerProfile = new HeaderProfileComponent();
 const siteMenu = new SiteMenuComponent(films);
 const sort = new SortComponent();
 const filmsSection = new FilmsSectionComponent().getElement();
-render(siteHeaderElement, headerProfile.getElement(), `beforeend`);
-render(siteMainElement, siteMenu.getElement(), `beforeend`);
-render(siteMainElement, sort.getElement(), `beforeend`);
-render(siteMainElement, filmsSection, `beforeend`);
+render(siteHeaderElement, headerProfile.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, siteMenu.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, sort.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, filmsSection, RenderPosition.BEFOREEND);
 
 const filmsList = filmsSection.querySelector(`.films-list`);
 const filmsListContainer = filmsList.querySelector(`.films-list__container`);
@@ -64,13 +63,13 @@ const renderFilm = (film) => {
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  const filmCardComponent = new FilmCardComponent(film);
+  const filmCardComponent = new FilmCardComponent(film).getElement();
   filmCardComponent.addEventListener(`click`, () => {
     replaceFilmsListToPopup();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`);
+  render(filmsListContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
 };
 
 
@@ -85,23 +84,23 @@ const topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточ�
 const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating);
 topRatedFilmCards.slice(0, topRatedFilms)
   .forEach((film) => {
-    render(filmsTopRatedContainer, new FilmCardComponent(film).getElement(), `beforeend`);
+    render(filmsTopRatedContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
   });
 
 const mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
 const mostCommentedFilmCards = films.sort((a, b) => b.comments.length - a.comments.length);
 mostCommentedFilmCards.slice(0, mostCommentedFilms)
   .forEach((film) => {
-    render(filmsMostCommentedContainer, new FilmCardComponent(film).getElement(), `beforeend`);
+    render(filmsMostCommentedContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
   });
 
 films.slice(0, POPUP_QUANTITY)
   .forEach((film) => {
-    render(body, new FilmDetailsPopupComponent(film).getElement(), `beforeend`);
+    render(body, new FilmDetailsPopupComponent(film).getElement(), RenderPosition.BEFOREEND);
   });
 
-render(filmsList, new ShowMoreButtonComponent().getElement(), `beforeend`);
-render(siteFooterElement, new FooterComponent(films).getElement(), `beforeend`);
+render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, new FooterComponent(films).getElement(), RenderPosition.BEFOREEND);
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
@@ -124,7 +123,7 @@ const onEscDown = (evt) => {
 };
 
 document.addEventListener(`keydown`, onEscDown);
-closePopupButton.addEventListener(`keydown`, onEscDown);
+closePopupButton.addEventListener(`click`, onEscDown);
 
 const showMoreButton = document.querySelector(`.films-list__show-more`);
 showMoreButton.addEventListener(`click`, () => {
@@ -132,7 +131,7 @@ showMoreButton.addEventListener(`click`, () => {
   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
   films.slice(prevFilmsCount, showingFilms)
-    .forEach((film) => render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`));
+    .forEach((film) => render(filmsListContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND));
 
   if (showingFilms >= films.length) {
     showMoreButton.remove();

@@ -21,10 +21,12 @@ export default class Footer {
   getTemplate() {
     return (
       `
+      <footer class="footer">
       <section class="footer__logo logo logo--smaller">Cinemaddict</section>
       <section class="footer__statistics">
-      <p>${this._length} movies inside</p>
+      <p>${this._filmСards.length} movies inside</p>
       </section>
+      </footer>
     `
     ).trim();
   }

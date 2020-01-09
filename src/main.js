@@ -1,12 +1,13 @@
-import {getHeaderProfile} from './components/header-profile.js';
-import {createSiteMenuTemplate} from './components/menu.js';
-import {createSortTemplate} from './components/sort.js';
-import {createFilmCard} from './components/film-card.js';
-import {createFilmsSection} from './components/films-section.js';
-import {createFilmDetailsPopup} from './components/film-details-popup.js';
-import {createShowMoreButton} from './components/show-more-button.js';
-import {createFooter} from './components/footer.js';
+import HeaderProfileComponent from './components/header-profile.js';
+import SiteMenuComponent from './components/menu.js';
+import SortComponent from './components/sort.js';
+import FilmCardComponent from './components/film-card.js';
+import FilmsSectionComponent from './components/films-section.js';
+import FilmDetailsPopupComponent from './components/film-details-popup.js';
+import ShowMoreButtonComponent from './components/show-more-button.js';
+import FooterComponent from './components/footer.js';
 import {generateFilmCards} from './mock/film-card-object.js';
+import {render, RenderPosition} from './mock/utils.js';
 
 const FILM_LIST_CARD_QUANTITY = 15;
 const FILM_CARD_QUANTITY = 5;
@@ -16,22 +17,20 @@ const MOST_COMMENTED_MOVIES_QUANTITY = 2;
 const POPUP_QUANTITY = 1;
 const ESC_KEYCODE = 27;
 
-const renderElement = (container, markup, position = `beforeend`) => {
-  container.insertAdjacentHTML(position, markup);
-};
-
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = document.querySelector(`.header`);
-const siteFooterElement = document.querySelector(`footer`);
 
 const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
 
-renderElement(siteHeaderElement, getHeaderProfile());
-renderElement(siteMainElement, createSiteMenuTemplate(films));
-renderElement(siteMainElement, createSortTemplate());
-renderElement(siteMainElement, createFilmsSection());
+const headerProfile = new HeaderProfileComponent();
+const siteMenu = new SiteMenuComponent(films);
+const sort = new SortComponent();
+const filmsSection = new FilmsSectionComponent().getElement();
+render(siteHeaderElement, headerProfile.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, siteMenu.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, sort.getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, filmsSection, RenderPosition.BEFOREEND);
 
-const filmsSection = siteMainElement.querySelector(`.films`);
 const filmsList = filmsSection.querySelector(`.films-list`);
 const filmsListContainer = filmsList.querySelector(`.films-list__container`);
 const filmsListExtra = filmsSection.querySelectorAll(`.films-list--extra`);
@@ -39,33 +38,69 @@ const filmsTopRatedContainer = filmsListExtra[0].querySelector(`.films-list__con
 const filmsMostCommentedContainer = filmsListExtra[1].querySelector(`.films-list__container`);
 const body = document.querySelector(`body`);
 
+const renderFilm = (film) => {
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+    if (isEscKey) {
+      replacePopupToFilmsList();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  const replacePopupToFilmsList = () => {
+    document.replaceChild(FilmDetailsPopupComponent.getElement(), FilmCardComponent.getElement());
+  };
+
+  const replaceFilmsListToPopup = () => {
+    document.replaceChild(FilmCardComponent.getElement(), FilmDetailsPopupComponent.getElement());
+  };
+
+  const filmDetailsPopupComponent = new FilmDetailsPopupComponent(film);
+  const closePopupButton = filmDetailsPopupComponent.getElement().querySelector(`.film-details__close-btn`);
+
+  closePopupButton.addEventListener(`click`, () => {
+    replacePopupToFilmsList();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+
+  const filmCardComponent = new FilmCardComponent(film).getElement();
+  filmCardComponent.addEventListener(`click`, () => {
+    replaceFilmsListToPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+
+  render(filmsListContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
+};
+
+
 let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)
   .forEach((film) => {
-    renderElement(filmsListContainer, createFilmCard(film));
+    renderFilm(film);
+    // render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`);
   });
 
 const topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг
 const topRatedFilmCards = films.sort((a, b) => b.rating - a.rating);
 topRatedFilmCards.slice(0, topRatedFilms)
   .forEach((film) => {
-    renderElement(filmsTopRatedContainer, createFilmCard(film));
+    render(filmsTopRatedContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
   });
 
 const mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе самых просматриваемых
 const mostCommentedFilmCards = films.sort((a, b) => b.comments.length - a.comments.length);
 mostCommentedFilmCards.slice(0, mostCommentedFilms)
   .forEach((film) => {
-    renderElement(filmsMostCommentedContainer, createFilmCard(film));
+    render(filmsMostCommentedContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
   });
 
 films.slice(0, POPUP_QUANTITY)
   .forEach((film) => {
-    renderElement(body, createFilmDetailsPopup(film));
+    render(body, new FilmDetailsPopupComponent(film).getElement(), RenderPosition.BEFOREEND);
   });
 
-renderElement(filmsList, createShowMoreButton());
-renderElement(siteFooterElement, createFooter(films));
+render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
+render(siteMainElement, new FooterComponent(films).getElement(), RenderPosition.BEFOREEND);
 
 const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
@@ -88,7 +123,7 @@ const onEscDown = (evt) => {
 };
 
 document.addEventListener(`keydown`, onEscDown);
-closePopupButton.addEventListener(`keydown`, onEscDown);
+closePopupButton.addEventListener(`click`, onEscDown);
 
 const showMoreButton = document.querySelector(`.films-list__show-more`);
 showMoreButton.addEventListener(`click`, () => {
@@ -96,7 +131,7 @@ showMoreButton.addEventListener(`click`, () => {
   showingFilms = showingFilms + SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
   films.slice(prevFilmsCount, showingFilms)
-    .forEach((film) => renderElement(filmsListContainer, createFilmCard(film)));
+    .forEach((film) => render(filmsListContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND));
 
   if (showingFilms >= films.length) {
     showMoreButton.remove();

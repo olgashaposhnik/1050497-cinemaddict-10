@@ -6,6 +6,7 @@ import FilmsSectionComponent from './components/films-section.js';
 import FilmDetailsPopupComponent from './components/film-details-popup.js';
 import ShowMoreButtonComponent from './components/show-more-button.js';
 import FooterComponent from './components/footer.js';
+import NoFilmsComponent from './components/no-films.js';
 import {generateFilmCards} from './mock/film-card-object.js';
 import {render, RenderPosition} from './mock/utils.js';
 
@@ -42,36 +43,43 @@ const renderFilm = (film) => {
   const onEscKeyDown = (evt) => {
     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
     if (isEscKey) {
-      replacePopupToFilmsList();
+      removePopup();
       document.removeEventListener(`keydown`, onEscKeyDown);
     }
   };
 
-  const replacePopupToFilmsList = () => {
-    document.replaceChild(FilmDetailsPopupComponent.getElement(), FilmCardComponent.getElement());
+  const removePopup = () => {
+    document.removeChild(FilmDetailsPopupComponent.getElement());
   };
 
-  const replaceFilmsListToPopup = () => {
-    document.replaceChild(FilmCardComponent.getElement(), FilmDetailsPopupComponent.getElement());
+  const openPopup = () => {
+    films.slice(0, POPUP_QUANTITY)
+    .forEach(() => {
+      render(body, new FilmDetailsPopupComponent(film).getElement(), RenderPosition.BEFOREEND);
+    // document.replaceChild(FilmCardComponent.getElement(), FilmDetailsPopupComponent.getElement());
+    });
   };
 
   const filmDetailsPopupComponent = new FilmDetailsPopupComponent(film);
   const closePopupButton = filmDetailsPopupComponent.getElement().querySelector(`.film-details__close-btn`);
 
   closePopupButton.addEventListener(`click`, () => {
-    replacePopupToFilmsList();
+    removePopup();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
   const filmCardComponent = new FilmCardComponent(film).getElement();
   filmCardComponent.addEventListener(`click`, () => {
-    replaceFilmsListToPopup();
+    openPopup();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
   render(filmsListContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
-};
 
+  if (films.length === 0) {
+    render(filmsListContainer, new NoFilmsComponent().getElement(), RenderPosition.BEFOREEND);
+  }
+};
 
 let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фильмов в основном разделе
 films.slice(0, showingFilms)

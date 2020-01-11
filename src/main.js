@@ -15,7 +15,6 @@ const FILM_CARD_QUANTITY = 5;
 const SHOWING_FILMS_QUANTITY_BY_BUTTON = 5;
 const TOP_RATED_MOVIES_QUANTITY = 2;
 const MOST_COMMENTED_MOVIES_QUANTITY = 2;
-const POPUP_QUANTITY = 1;
 const ESC_KEYCODE = 27;
 
 const siteMainElement = document.querySelector(`.main`);
@@ -49,32 +48,26 @@ const renderFilm = (film) => {
   };
 
   const removePopup = () => {
-    document.removeChild(FilmDetailsPopupComponent.getElement());
+    document.querySelector(`.film-details`).remove();
   };
 
-  const openPopup = () => {
-    films.slice(0, POPUP_QUANTITY)
-    .forEach(() => {
-      render(body, new FilmDetailsPopupComponent(film).getElement(), RenderPosition.BEFOREEND);
-    // document.replaceChild(FilmCardComponent.getElement(), FilmDetailsPopupComponent.getElement());
+  const openPopup = (singleFilm) => {
+    const filmPopup = new FilmDetailsPopupComponent(singleFilm).getElement();
+    const closePopupButton = filmPopup.querySelector(`.film-details__close-btn`);
+    closePopupButton.addEventListener(`click`, () => {
+      removePopup();
+      document.removeEventListener(`keydown`, onEscKeyDown);
     });
+    render(body, filmPopup, RenderPosition.BEFOREEND);
   };
-
-  const filmDetailsPopupComponent = new FilmDetailsPopupComponent(film);
-  const closePopupButton = filmDetailsPopupComponent.getElement().querySelector(`.film-details__close-btn`);
-
-  closePopupButton.addEventListener(`click`, () => {
-    removePopup();
-    document.addEventListener(`keydown`, onEscKeyDown);
-  });
 
   const filmCardComponent = new FilmCardComponent(film).getElement();
   filmCardComponent.addEventListener(`click`, () => {
-    openPopup();
+    openPopup(film);
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  render(filmsListContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
+  render(filmsListContainer, filmCardComponent, RenderPosition.BEFOREEND);
 
   if (films.length === 0) {
     render(filmsListContainer, new NoFilmsComponent().getElement(), RenderPosition.BEFOREEND);
@@ -85,7 +78,6 @@ let showingFilms = FILM_CARD_QUANTITY; // создаем карточки фил
 films.slice(0, showingFilms)
   .forEach((film) => {
     renderFilm(film);
-    // render(filmsListContainer, new FilmCardComponent(film).getElement(), `beforeend`);
   });
 
 const topRatedFilms = TOP_RATED_MOVIES_QUANTITY; // создаем карточки фильмов в разделе топ рейтинг
@@ -102,15 +94,8 @@ mostCommentedFilmCards.slice(0, mostCommentedFilms)
     render(filmsMostCommentedContainer, new FilmCardComponent(film).getElement(), RenderPosition.BEFOREEND);
   });
 
-films.slice(0, POPUP_QUANTITY)
-  .forEach((film) => {
-    render(body, new FilmDetailsPopupComponent(film).getElement(), RenderPosition.BEFOREEND);
-  });
-
 render(filmsList, new ShowMoreButtonComponent().getElement(), RenderPosition.BEFOREEND);
 render(siteMainElement, new FooterComponent(films).getElement(), RenderPosition.BEFOREEND);
-
-const closePopupButton = document.querySelector(`.film-details__close-btn`);
 
 const closePopup = () => {
   const activeFilmCard = document.querySelector(`.film-card.active`); // не забыть присвоить такой класс потом
@@ -129,9 +114,6 @@ const onEscDown = (evt) => {
     closePopup();
   }
 };
-
-document.addEventListener(`keydown`, onEscDown);
-closePopupButton.addEventListener(`click`, onEscDown);
 
 const showMoreButton = document.querySelector(`.films-list__show-more`);
 showMoreButton.addEventListener(`click`, () => {

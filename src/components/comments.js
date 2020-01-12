@@ -1,10 +1,10 @@
-import {createElement} from '../mock//utils.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class Comments {
+export default class Comments extends AbstractComponent {
   constructor(items) {
-    this._items = items;
+    super();
 
-    this._element = null;
+    this._items = items;
   }
 
   getTemplate() {
@@ -27,17 +27,5 @@ export default class Comments {
       );
     })
     .join(``).trim();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

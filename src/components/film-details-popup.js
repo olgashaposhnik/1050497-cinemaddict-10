@@ -1,8 +1,10 @@
-import {createElement} from '../mock//utils.js';
 import CommentsComponent from './comments.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class FilmDetailsPopup {
+export default class FilmDetailsPopup extends AbstractComponent {
   constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate}) {
+    super();
+
     this._title = title;
     this._rating = rating;
     this._year = year;
@@ -15,9 +17,6 @@ export default class FilmDetailsPopup {
     this._writers = writers;
     this._actors = actors;
     this._releaseDate = releaseDate;
-
-
-    this._element = null;
   }
 
   getTemplate() {
@@ -145,15 +144,8 @@ export default class FilmDetailsPopup {
     ).trim();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setClosePopupButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`)
+      .addEventListener(`click`, handler);
   }
 }

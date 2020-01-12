@@ -1,10 +1,10 @@
-import {createElement} from '../mock//utils.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class Footer {
+export default class Footer extends AbstractComponent {
   constructor(filmСards) {
-    this._filmСards = filmСards;
+    super();
 
-    this._element = null;
+    this._filmСards = filmСards;
   }
 
   getTemplate() {
@@ -18,17 +18,5 @@ export default class Footer {
       </footer>
     `
     ).trim();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

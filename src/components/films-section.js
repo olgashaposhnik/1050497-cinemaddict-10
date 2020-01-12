@@ -1,10 +1,6 @@
-import {createElement} from '../mock//utils.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class FilmsSection {
-  constructor() {
-    this._element = null;
-  }
-
+export default class FilmsSection extends AbstractComponent {
   getTemplate() {
     return `
       <section class="films">
@@ -23,17 +19,5 @@ export default class FilmsSection {
       </section>
       `
       .trim();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

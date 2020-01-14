@@ -10,15 +10,22 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-const render = (container, element, place) => {
+const render = (container, component, place) => {
   switch (place) {
     case RenderPosition.AFTERBEGIN:
-      container.prepend(element);
+      container.prepend(component.getElement());
       break;
     case RenderPosition.BEFOREEND:
-      container.append(element);
+      container.append(component.getElement());
       break;
   }
+};
+
+const remove = (component) => {
+  if (component.getElement) {
+    component.getElement().remove();
+  }
+  component.removeElement();
 };
 
 const getRandomInteger = (min, max) => { // возвращает случайное целое число от min до (max+1)
@@ -48,4 +55,4 @@ const createRandomValues = function (values, valuesMin, valuesMax) {
   return valueNumbers;
 };
 
-export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render};
+export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, remove};

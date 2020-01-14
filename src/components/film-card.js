@@ -1,7 +1,9 @@
-import {createElement} from '../mock//utils.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class FilmCard {
+export default class FilmCard extends AbstractComponent {
   constructor({title, rating, year, duration, genre, image, description, comments}) {
+    super();
+
     this._title = title;
     this._rating = rating;
     this._year = year;
@@ -10,8 +12,6 @@ export default class FilmCard {
     this._image = image;
     this._description = description;
     this._comments = comments;
-
-    this._element = null;
   }
 
   getTemplate() {
@@ -38,15 +38,8 @@ export default class FilmCard {
     ).trim();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setFilmCardClickHandler(handler) {
+    this.getElement()
+      .addEventListener(`click`, handler);
   }
 }

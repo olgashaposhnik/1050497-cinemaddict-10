@@ -1,11 +1,10 @@
-import {createElement} from '../mock//utils.js';
 import {generateProfileRating} from '../mock/user-profile.js';
+import AbstractComponent from './abstract-component.js';
 
-export default class HeaderProfile {
+export default class HeaderProfile extends AbstractComponent {
   constructor(rating) {
+    super();
     this._rating = rating;
-
-    this._element = null;
   }
 
   getTemplate(rating) {
@@ -18,17 +17,5 @@ export default class HeaderProfile {
       </section>
       `
     ).trim();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

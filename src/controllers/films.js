@@ -55,7 +55,7 @@ export default class FilmsController {
 
     this._ShowMoreButtonComponent = new ShowMoreButtonComponent();
     this._sortComponent = new SortComponent();
-    this._siteMainElement = this._container.getElement().querySelector(`.main`);
+    this._siteMainElement = document.querySelector(`.main`);
     this._filmsList = this._container.getElement().querySelector(`.films-list`);
     this._filmsListContainer = this._container.getElement().querySelector(`.films-list__container`);
     this._filmsListExtra = this._container.getElement().querySelectorAll(`.films-list--extra`);

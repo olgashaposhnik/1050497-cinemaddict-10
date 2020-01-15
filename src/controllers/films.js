@@ -2,7 +2,7 @@ import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsPopupComponent from '../components/film-details-popup.js';
 import ShowMoreButtonComponent from '../components/show-more-button.js';
 import {render, RenderPosition} from '../mock/utils.js';
-import SortComponent, {SortType} from '../components/sort.js';
+import {SortType} from '../components/sort.js';
 
 const FILM_CARD_QUANTITY = 5;
 const TOP_RATED_MOVIES_QUANTITY = 2;
@@ -48,13 +48,6 @@ const renderFilms = (container, films) => {
     renderFilm(film, container);
   });
 };
-
-const renderSort = () => {
-  const siteMainElement = document.querySelector(`.main`);
-  const sortComponent = new SortComponent();
-  render(siteMainElement, sortComponent, RenderPosition.BEFOREEND);
-};
-
 
 export default class FilmsController {
   constructor(container, sort) {
@@ -111,17 +104,14 @@ export default class FilmsController {
       });
     };
 
-    // render(this._siteMainElement, this._sortComponent, RenderPosition.BEFOREEND);
-
     renderShowMoreButton();
-    renderSort();
 
-    this._sortComponent.setSortTypeChangeHandler((sortType) => {
+    this._sort.setSortTypeChangeHandler((sortType) => {
       let sortedFilms = [];
 
       switch (sortType) {
         case SortType.DATE:
-          sortedFilms = filmCards.slice().sort((a, b) => a.year - b.year);
+          sortedFilms = filmCards.slice().sort((a, b) => b.year - a.year);
           break;
         case SortType.RATING:
           sortedFilms = filmCards.slice().sort((a, b) => b.rating - a.rating);
@@ -134,12 +124,12 @@ export default class FilmsController {
       this._filmsListContainer.innerHTML = ``;
 
       renderFilms(this._filmsListContainer, sortedFilms);
-      const showMoreButton = document.querySelector(`.films-list__show-more`);
-      if (sortType === SortType.DEFAULT) {
-        renderShowMoreButton();
-      } else {
-        showMoreButton.remove();
-      }
+      // const showMoreButton = document.querySelector(`.films-list__show-more`);
+      // if (sortType === SortType.DEFAULT) {
+      //   renderShowMoreButton();
+      // } else {
+      //   showMoreButton.remove();
+      // }
     });
   }
 }

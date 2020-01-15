@@ -49,12 +49,19 @@ const renderFilms = (container, films) => {
   });
 };
 
+const renderSort = () => {
+  const siteMainElement = document.querySelector(`.main`);
+  const sortComponent = new SortComponent();
+  render(siteMainElement, sortComponent, RenderPosition.BEFOREEND);
+};
+
+
 export default class FilmsController {
-  constructor(container) {
+  constructor(container, sort) {
     this._container = container;
+    this._sort = sort;
 
     this._ShowMoreButtonComponent = new ShowMoreButtonComponent();
-    this._sortComponent = new SortComponent();
     this._siteMainElement = document.querySelector(`.main`);
     this._filmsList = this._container.getElement().querySelector(`.films-list`);
     this._filmsListContainer = this._container.getElement().querySelector(`.films-list__container`);
@@ -104,9 +111,10 @@ export default class FilmsController {
       });
     };
 
-    render(this._siteMainElement, this._sortComponent, RenderPosition.BEFOREEND);
+    // render(this._siteMainElement, this._sortComponent, RenderPosition.BEFOREEND);
 
     renderShowMoreButton();
+    renderSort();
 
     this._sortComponent.setSortTypeChangeHandler((sortType) => {
       let sortedFilms = [];

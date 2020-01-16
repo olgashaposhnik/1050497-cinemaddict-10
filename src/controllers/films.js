@@ -111,10 +111,10 @@ export default class FilmsController {
 
       switch (sortType) {
         case SortType.DATE:
-          sortedFilms = filmCards.slice().sort((a, b) => b.year - a.year);
+          sortedFilms = filmCards.slice(0, showingFilms).sort((a, b) => b.year - a.year);
           break;
         case SortType.RATING:
-          sortedFilms = filmCards.slice().sort((a, b) => b.rating - a.rating);
+          sortedFilms = filmCards.slice(0, showingFilms).sort((a, b) => b.rating - a.rating);
           break;
         case SortType.DEFAULT:
           sortedFilms = filmCards.slice(0, showingFilms);

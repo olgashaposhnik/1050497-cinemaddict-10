@@ -113,7 +113,6 @@ export default class FilmsController {
       switch (sortType) {
         case SortType.DATE:
           sortedFilms = filmCards.sort((a, b) => b.year - a.year);
-          // this.SortType.classList.add(`sort__button--active`);
           break;
         case SortType.RATING:
           sortedFilms = filmCards.sort((a, b) => b.rating - a.rating);
@@ -126,12 +125,6 @@ export default class FilmsController {
       this._filmsListContainer.innerHTML = ``;
 
       renderFilms(this._filmsListContainer, sortedFilms.slice(0, showingFilms));
-      // const showMoreButton = document.querySelector(`.films-list__show-more`);
-      // if (sortType === SortType.DEFAULT) {
-      //   renderShowMoreButton();
-      // } else {
-      //   showMoreButton.remove();
-      // }
     });
   }
 }

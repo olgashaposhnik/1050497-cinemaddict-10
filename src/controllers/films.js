@@ -107,23 +107,25 @@ export default class FilmsController {
     renderShowMoreButton();
 
     this._sort.setSortTypeChangeHandler((sortType) => {
+      showingFilms = FILM_CARD_QUANTITY;
       let sortedFilms = [];
 
       switch (sortType) {
         case SortType.DATE:
-          sortedFilms = filmCards.slice(0, showingFilms).sort((a, b) => b.year - a.year);
+          sortedFilms = filmCards.sort((a, b) => b.year - a.year);
+          // this.SortType.classList.add(`sort__button--active`);
           break;
         case SortType.RATING:
-          sortedFilms = filmCards.slice(0, showingFilms).sort((a, b) => b.rating - a.rating);
+          sortedFilms = filmCards.sort((a, b) => b.rating - a.rating);
           break;
         case SortType.DEFAULT:
-          sortedFilms = filmCards.slice(0, showingFilms);
+          sortedFilms = filmCards;
           break;
       }
 
       this._filmsListContainer.innerHTML = ``;
 
-      renderFilms(this._filmsListContainer, sortedFilms);
+      renderFilms(this._filmsListContainer, sortedFilms.slice(0, showingFilms));
       // const showMoreButton = document.querySelector(`.films-list__show-more`);
       // if (sortType === SortType.DEFAULT) {
       //   renderShowMoreButton();

@@ -24,6 +24,6 @@ render(siteMainElement, sort, RenderPosition.BEFOREEND);
 render(siteMainElement, filmsSection, RenderPosition.BEFOREEND);
 render(siteMainElement, new FooterComponent(films), RenderPosition.BEFOREEND);
 
-const filmsController = new FilmsController(filmsSection);
+const filmsController = new FilmsController(filmsSection, sort);
 
 filmsController.render(films);

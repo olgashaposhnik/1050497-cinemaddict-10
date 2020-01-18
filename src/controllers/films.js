@@ -108,14 +108,14 @@ export default class FilmsController {
 
     this._sort.setSortTypeChangeHandler((sortType) => {
       showingFilms = FILM_CARD_QUANTITY;
-      let sortedFilms = [];
+      let sortedFilms = filmCards.slice();
 
       switch (sortType) {
         case SortType.DATE:
-          sortedFilms = filmCards.sort((a, b) => b.year - a.year);
+          sortedFilms = sortedFilms.sort((a, b) => b.year - a.year);
           break;
         case SortType.RATING:
-          sortedFilms = filmCards.sort((a, b) => b.rating - a.rating);
+          sortedFilms = sortedFilms.sort((a, b) => b.rating - a.rating);
           break;
         case SortType.DEFAULT:
           sortedFilms = filmCards;

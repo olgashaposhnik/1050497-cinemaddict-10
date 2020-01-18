@@ -27,7 +27,6 @@ export default class Sort extends AbstractComponent {
 
   setSortTypeChangeHandler(handler) {
     this.getElement().addEventListener(`click`, (evt) => {
-      document.querySelector(`.sort__button--active`).classList.remove(`sort__button--active`);
       evt.preventDefault();
 
       if (evt.target.tagName !== `A`) {
@@ -35,6 +34,7 @@ export default class Sort extends AbstractComponent {
       }
 
       const sortType = evt.target.dataset.sortType;
+      document.querySelector(`.sort__button--active`).classList.remove(`sort__button--active`);
       evt.target.classList.add(`sort__button--active`);
 
       if (this._currentSortType === sortType) {

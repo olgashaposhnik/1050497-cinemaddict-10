@@ -42,4 +42,19 @@ export default class FilmCard extends AbstractComponent {
     this.getElement()
       .addEventListener(`click`, handler);
   }
+
+  setWatchlistButtonClickHandler(handler) {
+  //   this.getElement()
+  //     .addEventListener(`click`, handler);
+  }
+
+  setWatchedButtonClickHandler(handler) {
+    //   this.getElement()
+    //     .addEventListener(`click`, handler);
+  }
+
+  setFavoriteButtonClickHandler(handler) {
+    //   this.getElement()
+    //     .addEventListener(`click`, handler);
+  }
 }

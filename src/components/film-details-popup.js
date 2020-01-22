@@ -1,10 +1,13 @@
 import CommentsComponent from './comments.js';
-import AbstractComponent from './abstract-component.js';
+// import AbstractComponent from './abstract-component.js';
+import flatpickr from 'flatpickr';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
-export default class FilmDetailsPopup extends AbstractComponent {
-  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate}) {
+export default class FilmDetailsPopup extends AbstractSmartComponent {
+  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, inWatchlist, isWatched, isFavorite}) {
     super();
 
+    this._film = film;
     this._title = title;
     this._rating = rating;
     this._year = year;
@@ -17,12 +20,24 @@ export default class FilmDetailsPopup extends AbstractComponent {
     this._writers = writers;
     this._actors = actors;
     this._releaseDate = releaseDate;
+    this._inWatchlist = inWatchlist;
+    this._isWatched = isWatched;
+    this._isFavorite = isFavorite;
+    this._flatpickr = null;
+    this._сlosePopupButtonClickHandler = null;
+
+    this._applyFlatpickr();
+    this._subscribeOnEvents();
   }
 
   getTemplate() {
+    const inWatchlistClass = this._inWatchlist ? `film-isInWatchlist` : ``;
+    const isWatchedClass = this.isWatched ? `film-isWatched` : ``;
+    const isFavoriteClass = this._isFavorite ? `film-isFavorite` : ``;
+
     return (
       `
-    <section class="film-details">
+    <section class="film-details ${inWatchlistClass} ${isWatchedClass} ${isFavoriteClass}">
       <form class="film-details__inner" action="" method="get">
         <div class="form-details__top-container">
           <div class="film-details__close">
@@ -144,8 +159,31 @@ export default class FilmDetailsPopup extends AbstractComponent {
     ).trim();
   }
 
+  recoveryListeners() {
+    this.setClosePopupButtonClickHandler(this._сlosePopupButtonClickHandler);
+    this._subscribeOnEvents();
+  }
+
+  rerender() {
+    super.rerender();
+
+    this._applyFlatpickr();
+  }
+
+  reset() {
+    const film = this._film;
+
+    this._isInWatchlistFilm = Object.assign({}, film.inWatchlist);
+    this._iisWatchedFilm = Object.assign({}, film.isWatched);
+    this._isFavoriteFilm = Object.assign({}, film.isFavorite);
+
+    this.rerender();
+  }
+
   setClosePopupButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
+
+    this._сlosePopupButtonClickHandler = handler;
   }
 }

@@ -1,3 +1,13 @@
+import moment from 'moment';
+
+const formatTime = (date) => {
+  return moment(date).format(`hh:mm A`); // проверить, тот ли формат
+};
+
+const formatDate = (date) => {
+  return moment(date).format(`DD MMMM YYYY`);
+};
+
 const RenderPosition = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
@@ -67,4 +77,4 @@ const createRandomValues = function (values, valuesMin, valuesMax) {
   return valueNumbers;
 };
 
-export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, replace, remove};
+export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, replace, remove, formatTime, formatDate};

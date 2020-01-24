@@ -1,13 +1,11 @@
 import CommentsComponent from './comments.js';
 // import AbstractComponent from './abstract-component.js';
-import flatpickr from 'flatpickr';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
 export default class FilmDetailsPopup extends AbstractSmartComponent {
   constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, inWatchlist, isWatched, isFavorite}) {
     super();
 
-    this._film = film;
     this._title = title;
     this._rating = rating;
     this._year = year;
@@ -32,7 +30,7 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
 
   getTemplate() {
     const inWatchlistClass = this._inWatchlist ? `film-isInWatchlist` : ``;
-    const isWatchedClass = this.isWatched ? `film-isWatched` : ``;
+    const isWatchedClass = this._isWatched ? `film-isWatched` : ``;
     const isFavoriteClass = this._isFavorite ? `film-isFavorite` : ``;
 
     return (
@@ -185,5 +183,30 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
       .addEventListener(`click`, handler);
 
     this._сlosePopupButtonClickHandler = handler;
+  }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+
+    element.querySelector(`.film-isInWatchlist`)
+      .addEventListener(`click`, () => {
+        this._inWatchlist = !this._inWatchlist;
+
+        this.rerender();
+      });
+
+    element.querySelector(`.film-isWatched`)
+      .addEventListener(`click`, () => {
+        this.isWatched = !this.isWatched;
+
+        this.rerender();
+      });
+
+    element.querySelector(`.film-isFavorite`)
+      .addEventListener(`click`, () => {
+        this._isFavorite = !this._isFavorite;
+
+        this.rerender();
+      });
   }
 }

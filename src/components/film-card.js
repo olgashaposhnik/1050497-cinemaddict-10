@@ -1,7 +1,7 @@
 import AbstractComponent from './abstract-component.js';
 
 export default class FilmCard extends AbstractComponent {
-  constructor({title, rating, year, duration, genre, image, description, comments}) {
+  constructor({title, rating, year, duration, genre, image, description, comments, isWatchlist, isWatched, isFavorite}) {
     super();
 
     this._title = title;
@@ -12,20 +12,23 @@ export default class FilmCard extends AbstractComponent {
     this._image = image;
     this._description = description;
     this._comments = comments;
+    this._isWatchlist = isWatchlist;
+    this._isWatched = isWatched;
+    this._isFavorite = isFavorite;
   }
 
   getTemplate() {
-    const createButtonMarkup = (name, classname) => {
+    const createButtonMarkup = (name, classname, isActive) => {
       return (
-        `<button class="film-card__controls-item button film-card__controls-item--${classname}">
+        `<button class="film-card__controls-item button film-card__controls-item--${classname} ${isActive ? `film-card__controls-item--active` : ``}">
           ${name}
         </button>`
       ).trim();
     };
 
-    const addToWatchlistButton = createButtonMarkup(`Add to watchlist`, `add-to-watchlist`);
-    const markAsWatchedButton = createButtonMarkup(`Mark as watched`, `mark-as-watched`);
-    const markAsFavoriteButton = createButtonMarkup(`Mark as favorite`, `favorite`);
+    const addToWatchlistButton = createButtonMarkup(`Add to watchlist`, `add-to-watchlist`, this._isWatchlist);
+    const markAsWatchedButton = createButtonMarkup(`Mark as watched`, `mark-as-watched`, this._isWatched);
+    const markAsFavoriteButton = createButtonMarkup(`Mark as favorite`, `favorite`, this._isFavorite);
 
     return (
       `
@@ -51,22 +54,32 @@ export default class FilmCard extends AbstractComponent {
   }
 
   setFilmCardClickHandler(handler) {
-    this.getElement()
-      .addEventListener(`click`, handler);
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, handler);
   }
 
   setWatchlistButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`)
-      .addEventListener(`click`, handler);
+      .addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        handler();
+      });
   }
 
   setWatchedButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`)
-      .addEventListener(`click`, handler);
+      .addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        handler();
+      });
   }
 
   setFavoriteButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-card__controls-item--favorite`)
-      .addEventListener(`click`, handler);
+      .addEventListener(`click`, (evt) => {
+        evt.preventDefault();
+        handler();
+      });
   }
 }

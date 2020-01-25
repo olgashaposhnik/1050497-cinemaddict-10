@@ -60,6 +60,14 @@ const getRandomValues = (array) => { // возвращает случайное 
   return array[randomIndex];
 };
 
+/**
+ * @description возвращает случайное булево значение
+ * @return {boolean}
+ */
+const getRandomBool = () => {
+  return Math.random() > 0.5;
+};
+
 const createRandomValues = function (values, valuesMin, valuesMax) {
   const valueNumbers = []; // создаем массив с номерами опций
   const valuesQuantity = getRandomInteger(valuesMin, valuesMax); // сгенерировали количество опций
@@ -77,4 +85,4 @@ const createRandomValues = function (values, valuesMin, valuesMax) {
   return valueNumbers;
 };
 
-export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, replace, remove, formatTime, formatDate};
+export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, replace, remove, formatTime, formatDate, getRandomBool};

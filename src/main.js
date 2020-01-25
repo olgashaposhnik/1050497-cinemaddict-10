@@ -1,8 +1,8 @@
 import HeaderProfileComponent from './components/header-profile.js';
-import SiteMenuComponent from './components/menu.js';
+import SiteMenuComponent from './components/site-menu.js';
 import SortComponent from './components/sort.js';
 import FilmsSectionComponent from './components/films-section.js';
-import PageController from './controllers/page.js';
+import PageController from './controllers/page-controller.js';
 import FooterComponent from './components/footer.js';
 import {generateFilmCards} from './mock/film-card-object.js';
 import {render, RenderPosition} from './mock/utils.js';

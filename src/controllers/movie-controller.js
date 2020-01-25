@@ -17,6 +17,7 @@ export default class MovieController {
 
     this._filmCardComponent = null;
     this._filmDetailsPopupComponent = null;
+    this._filmCardImage = null;
 
     this._onEscKeyDown = this._onEscKeyDown.bind(this);
   }
@@ -26,6 +27,7 @@ export default class MovieController {
     const oldFilmDetailsPopupComponent = this._filmDetailsPopupComponent;
 
     this._filmCardComponent = new FilmCardComponent(film);
+    this._filmDetailsPopupComponent = new FilmDetailsPopupComponent(film);
 
     this._filmCardComponent.setFilmCardClickHandler(() => {
       this._openPopup(film);
@@ -34,23 +36,23 @@ export default class MovieController {
 
     this._filmCardComponent.setWatchlistButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
-        inWatchlist: !film.inWatchlist,
+        isWatchlist: !film.isWatchlist,
       }));
-      this._replaceOldFilmCardToNew();
+      // this._replaceOldFilmCardToNew();
     });
 
     this._filmCardComponent.setWatchedButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
         isWatched: !film.isWatched,
       }));
-      this._replaceOldFilmCardToNew();
+      // this._replaceOldFilmCardToNew();
     });
 
     this._filmCardComponent.setFavoriteButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
         isFavorite: !film.isFavorite,
       }));
-      this._replaceOldFilmCardToNew();
+      // this._replaceOldFilmCardToNew();
     });
 
     if (oldFilmCardComponent && oldFilmDetailsPopupComponent) {
@@ -63,16 +65,16 @@ export default class MovieController {
 
   setFilmView() {
     if (this._mode !== Mode.FILM) {
-      this._replaceOldFilmCardToNew();
+      // this._replaceOldFilmCardToNew();
     }
   }
 
-  _replaceOldFilmCardToNew() { // тут закончила
-    this._filmCardComponent.reset();
+  // _replaceOldFilmCardToNew() { // тут закончила
+  //   this._filmCardComponent.reset();
 
-    replace(this._filmCardComponent, this._filmDetailsPopupComponent);
-    this._mode = Mode.FILM;
-  }
+  //   replace(this._filmCardComponent, this._filmDetailsPopupComponent);
+  //   this._mode = Mode.FILM;
+  // }
 
   _replaceFilmToPopup() {
     this._onViewChange();
@@ -81,10 +83,9 @@ export default class MovieController {
     this._mode = Mode.POPUP;
   }
 
-  _openPopup(film) {
-    this._filmDetailsPopupComponent = new FilmDetailsPopupComponent(film);
+  _openPopup() {
     this._filmDetailsPopupComponent.setClosePopupButtonClickHandler(() => {
-      this.removePopup();
+      this._removePopup();
       document.removeEventListener(`keydown`, this._onEscKeyDown);
     });
 
@@ -99,7 +100,7 @@ export default class MovieController {
     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
     if (isEscKey) {
-      this.removePopup();
+      this._removePopup();
       document.removeEventListener(`keydown`, this._onEscKeyDown);
     }
   }

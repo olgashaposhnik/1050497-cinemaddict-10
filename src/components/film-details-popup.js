@@ -3,7 +3,7 @@ import CommentsComponent from './comments.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
 export default class FilmDetailsPopup extends AbstractSmartComponent {
-  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, inWatchlist, isWatched, isFavorite}) {
+  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, isWatchlist, isWatched, isFavorite}) {
     super();
 
     this._title = title;
@@ -18,18 +18,16 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
     this._writers = writers;
     this._actors = actors;
     this._releaseDate = releaseDate;
-    this._inWatchlist = inWatchlist;
+    this._isWatchlist = isWatchlist;
     this._isWatched = isWatched;
     this._isFavorite = isFavorite;
-    this._flatpickr = null;
     this._сlosePopupButtonClickHandler = null;
 
-    this._applyFlatpickr();
     this._subscribeOnEvents();
   }
 
   getTemplate() {
-    const inWatchlistClass = this._inWatchlist ? `film-isInWatchlist` : ``;
+    const inWatchlistClass = this._isWatchlist ? `film-isInWatchlist` : ``;
     const isWatchedClass = this._isWatched ? `film-isWatched` : ``;
     const isFavoriteClass = this._isFavorite ? `film-isFavorite` : ``;
 
@@ -164,8 +162,6 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
 
   rerender() {
     super.rerender();
-
-    this._applyFlatpickr();
   }
 
   reset() {
@@ -188,21 +184,21 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
   _subscribeOnEvents() {
     const element = this.getElement();
 
-    element.querySelector(`.film-isInWatchlist`)
+    element.querySelector(`.film-details__control-label--watchlist`)
       .addEventListener(`click`, () => {
-        this._inWatchlist = !this._inWatchlist;
+        this._isWatchlist = !this._isWatchlist;
 
         this.rerender();
       });
 
-    element.querySelector(`.film-isWatched`)
+    element.querySelector(`.film-details__control-label--watched`)
       .addEventListener(`click`, () => {
         this.isWatched = !this.isWatched;
 
         this.rerender();
       });
 
-    element.querySelector(`.film-isFavorite`)
+    element.querySelector(`.film-details__control-label--favorite`)
       .addEventListener(`click`, () => {
         this._isFavorite = !this._isFavorite;
 

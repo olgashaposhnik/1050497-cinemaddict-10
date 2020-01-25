@@ -2,7 +2,7 @@
 // import FilmDetailsPopupComponent from '../components/film-details-popup.js';
 import ShowMoreButtonComponent from '../components/show-more-button.js';
 import {SortType} from '../components/sort.js';
-import MovieController from './film.js';
+import MovieController from './movie-controller.js';
 import {render, remove, RenderPosition} from '../mock/utils.js';
 
 const FILM_CARD_QUANTITY = 5;
@@ -46,7 +46,7 @@ const SHOWING_FILMS_QUANTITY_BY_BUTTON = 5;
 
 const renderFilms = (filmsList, films, onDataChange, onViewChange) => {
   return films.map((film) => {
-    const movieController = new MovieController(filmsList, films, onDataChange, onViewChange);
+    const movieController = new MovieController(filmsList, onDataChange, onViewChange);
     movieController.render(film);
     return movieController;
   });
@@ -126,13 +126,13 @@ export default class PageController {
   }
 
   _onDataChange(movieController, oldData, newData) {
-    const index = this._films.findIndex((it) => it === oldData);
+    const index = this._filmCards.findIndex((it) => it === oldData);
     if (index === -1) {
       return;
     }
 
-    this._films = [].concat(this._films.slice(0, index), newData, this._films.slice(index + 1));
-    movieController.render(this._films[index]);
+    this._filmCards = [].concat(this._filmCards.slice(0, index), newData, this._filmCards.slice(index + 1));
+    movieController.render(this._filmCards[index]);
   }
 
   _onViewChange() {
@@ -140,7 +140,7 @@ export default class PageController {
   }
 
   _onSortTypeChange(sortType) {
-    const showingFilms = FILM_CARD_QUANTITY;
+    // const showingFilms = FILM_CARD_QUANTITY;
     let sortedFilms = this._filmCards.slice();
 
     switch (sortType) {

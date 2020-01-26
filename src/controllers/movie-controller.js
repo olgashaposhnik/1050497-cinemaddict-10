@@ -69,13 +69,6 @@ export default class MovieController {
     }
   }
 
-  // _replaceOldFilmCardToNew() { // тут закончила
-  //   this._filmCardComponent.reset();
-
-  //   replace(this._filmCardComponent, this._filmDetailsPopupComponent);
-  //   this._mode = Mode.FILM;
-  // }
-
   _replaceFilmToPopup() {
     this._onViewChange();
 

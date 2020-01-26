@@ -4,7 +4,6 @@ import ShowMoreButtonComponent from '../components/show-more-button.js';
 import {SortType} from '../components/sort.js';
 import MovieController from './movie-controller.js';
 import {render, remove, RenderPosition} from '../mock/utils.js';
-
 const FILM_CARD_QUANTITY = 5;
 const TOP_RATED_MOVIES_QUANTITY = 2;
 const MOST_COMMENTED_MOVIES_QUANTITY = 2;
@@ -68,7 +67,6 @@ export default class PageController {
     this._topRatedFilmControllers = [];
     this._mostCommentedFilmControllers = [];
     this._newFilmsByButtonControllers = [];
-    this._showingFilmsCount = FILM_CARD_QUANTITY;
     this._ShowMoreButtonComponent = new ShowMoreButtonComponent();
     this._siteMainElement = document.querySelector(`.main`);
     this._filmsList = this._container.getElement().querySelector(`.films-list`);
@@ -84,7 +82,7 @@ export default class PageController {
     this._mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY;
     this._showingFilmsQuantityByButton = SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
-    // this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
+    this._sort.setSortTypeChangeHandler(this._onSortTypeChange);
   }
 
   render(filmCards) {
@@ -115,9 +113,6 @@ export default class PageController {
 
       const newFilmsByButton = renderFilms(this._filmsListContainer, this._filmCards.slice(prevFilmsCount, this._showingFilms), this._onDataChange, this._onViewChange);
       this._newFilmsByButtonControllers = this._newFilmsByButtonControllers.concat(newFilmsByButton);
-
-      // this._filmCards.slice(prevFilmsCount, this._showingFilms)
-      //     .forEach((film) => renderFilm(film, this._filmsListContainer));
 
       if (this._showingFilms >= this._filmCards.length) {
         showMoreButton.remove();
@@ -157,13 +152,14 @@ export default class PageController {
 
     this._filmsListContainer.innerHTML = ``;
 
-    // renderFilms(this._filmsListContainer, sortedFilms.slice(0, showingFilms));
+    renderFilms(this._filmsListContainer, sortedFilms.slice(0, this._showingFilms), this._onDataChange, this._onViewChange);
     // this._showedFilmControllers = newFilms;
+    this._renderShowMoreButton();
 
-    if (sortType === SortType.DEFAULT) {
-      this._renderShowMoreButton();
-    } else {
-      remove(this._ShowMoreButtonComponent);
-    }
+    // if (sortType === SortType.DEFAULT) {
+    //   this._renderShowMoreButton();
+    // } else {
+    //   remove(this._ShowMoreButtonComponent);
+    // }
   }
 }

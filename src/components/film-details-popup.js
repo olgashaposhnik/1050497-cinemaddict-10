@@ -86,9 +86,7 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
                 <tr class="film-details__row">
                   <td class="film-details__term">Genres</td>
                   <td class="film-details__cell">
-                    <span class="film-details__genre">${this._genres}</span>
-                    <span class="film-details__genre">${this._genres}</span>
-                    <span class="film-details__genre">${this._genres}</span></td>
+                    <span class="film-details__genre">${this._genres.join(`, `)}</span></td>
                 </tr>
               </table>
 

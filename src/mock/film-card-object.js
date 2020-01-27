@@ -1,4 +1,4 @@
-import {getRandomValues, getRandomInteger, createRandomValues} from './utils.js';
+import {getRandomValues, getRandomInteger, createRandomValues, getRandomBool} from './utils.js';
 
 const filmsNames = [
   `Побег из Шоушенка`,
@@ -87,11 +87,6 @@ const СommentsCount = {
   MAX: 30
 };
 
-const filmsAttributes = [
-  `true`,
-  `false`
-];
-
 const commentsText = [
   `Interesting setting and a good cast`,
   `Booooooooooring`,
@@ -158,9 +153,9 @@ const generateFilmCard = () => {
     genres: createRandomValues(filmsGenres, 1, 3),
     image: `./images/posters/` + getRandomValues(filmsImages),
     description: createRandomValues(filmsDescriptions, 1, 3),
-    inWatchlist: getRandomValues(filmsAttributes),
-    inHistory: getRandomValues(filmsAttributes),
-    inFavourites: getRandomValues(filmsAttributes),
+    isWatchlist: getRandomBool(),
+    isHistory: getRandomBool(),
+    isFavourites: getRandomBool(),
     comments: generateComments(getRandomInteger(СommentsCount.MIN, СommentsCount.MAX)),
     director: getRandomValues(commentAuthor),
     writers: createRandomValues(commentAuthor, 1, 3),

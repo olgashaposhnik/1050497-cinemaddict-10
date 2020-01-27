@@ -1,8 +1,8 @@
 import HeaderProfileComponent from './components/header-profile.js';
-import SiteMenuComponent from './components/menu.js';
+import SiteMenuComponent from './components/site-menu.js';
 import SortComponent from './components/sort.js';
 import FilmsSectionComponent from './components/films-section.js';
-import FilmsController from './controllers/films.js';
+import PageController from './controllers/page-controller.js';
 import FooterComponent from './components/footer.js';
 import {generateFilmCards} from './mock/film-card-object.js';
 import {render, RenderPosition} from './mock/utils.js';
@@ -24,6 +24,6 @@ render(siteMainElement, sort, RenderPosition.BEFOREEND);
 render(siteMainElement, filmsSection, RenderPosition.BEFOREEND);
 render(siteMainElement, new FooterComponent(films), RenderPosition.BEFOREEND);
 
-const filmsController = new FilmsController(filmsSection, sort);
+const pageController = new PageController(filmsSection, sort);
 
-filmsController.render(films);
+pageController.render(films);

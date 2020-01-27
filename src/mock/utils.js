@@ -1,3 +1,13 @@
+import moment from 'moment';
+
+const formatTime = (date) => {
+  return moment(date).format(`hh:mm A`); // проверить, тот ли формат
+};
+
+const formatDate = (date) => {
+  return moment(date).format(`DD MMMM YYYY`);
+};
+
 const RenderPosition = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
@@ -21,6 +31,18 @@ const render = (container, component, place) => {
   }
 };
 
+const replace = (newComponent, oldComponent) => {
+  const parentElement = oldComponent.getElement().parentElement;
+  const newElement = newComponent.getElement();
+  const oldElement = oldComponent.getElement();
+
+  const isExistElements = !!(parentElement && newElement && oldElement);
+
+  if (isExistElements && parentElement.contains(oldElement)) {
+    parentElement.replaceChild(newElement, oldElement);
+  }
+};
+
 const remove = (component) => {
   if (component.getElement) {
     component.getElement().remove();
@@ -36,6 +58,14 @@ const getRandomInteger = (min, max) => { // возвращает случайн�
 const getRandomValues = (array) => { // возвращает случайное значение из массива
   const randomIndex = getRandomInteger(0, array.length - 1);
   return array[randomIndex];
+};
+
+/**
+ * @description возвращает случайное булево значение
+ * @return {boolean}
+ */
+const getRandomBool = () => {
+  return Math.random() > 0.5;
 };
 
 const createRandomValues = function (values, valuesMin, valuesMax) {
@@ -55,4 +85,4 @@ const createRandomValues = function (values, valuesMin, valuesMax) {
   return valueNumbers;
 };
 
-export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, remove};
+export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, replace, remove, formatTime, formatDate, getRandomBool};

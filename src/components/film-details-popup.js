@@ -1,8 +1,9 @@
 import CommentsComponent from './comments.js';
-import AbstractComponent from './abstract-component.js';
+// import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
-export default class FilmDetailsPopup extends AbstractComponent {
-  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate}) {
+export default class FilmDetailsPopup extends AbstractSmartComponent {
+  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, isWatchlist, isWatched, isFavorite}) {
     super();
 
     this._title = title;
@@ -17,12 +18,22 @@ export default class FilmDetailsPopup extends AbstractComponent {
     this._writers = writers;
     this._actors = actors;
     this._releaseDate = releaseDate;
+    this._isWatchlist = isWatchlist;
+    this._isWatched = isWatched;
+    this._isFavorite = isFavorite;
+    this._сlosePopupButtonClickHandler = null;
+
+    this._subscribeOnEvents();
   }
 
   getTemplate() {
+    const inWatchlistClass = this._isWatchlist ? `film-isInWatchlist` : ``;
+    const isWatchedClass = this._isWatched ? `film-isWatched` : ``;
+    const isFavoriteClass = this._isFavorite ? `film-isFavorite` : ``;
+
     return (
       `
-    <section class="film-details">
+    <section class="film-details ${inWatchlistClass} ${isWatchedClass} ${isFavoriteClass}">
       <form class="film-details__inner" action="" method="get">
         <div class="form-details__top-container">
           <div class="film-details__close">
@@ -75,9 +86,7 @@ export default class FilmDetailsPopup extends AbstractComponent {
                 <tr class="film-details__row">
                   <td class="film-details__term">Genres</td>
                   <td class="film-details__cell">
-                    <span class="film-details__genre">${this._genres}</span>
-                    <span class="film-details__genre">${this._genres}</span>
-                    <span class="film-details__genre">${this._genres}</span></td>
+                    <span class="film-details__genre">${this._genres.join(`, `)}</span></td>
                 </tr>
               </table>
 
@@ -144,8 +153,54 @@ export default class FilmDetailsPopup extends AbstractComponent {
     ).trim();
   }
 
+  recoveryListeners() {
+    this.setClosePopupButtonClickHandler(this._сlosePopupButtonClickHandler);
+    this._subscribeOnEvents();
+  }
+
+  rerender() {
+    super.rerender();
+  }
+
+  reset() {
+    const film = this._film;
+
+    this._isInWatchlistFilm = Object.assign({}, film.inWatchlist);
+    this._iisWatchedFilm = Object.assign({}, film.isWatched);
+    this._isFavoriteFilm = Object.assign({}, film.isFavorite);
+
+    this.rerender();
+  }
+
   setClosePopupButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
+
+    this._сlosePopupButtonClickHandler = handler;
+  }
+
+  _subscribeOnEvents() {
+    const element = this.getElement();
+
+    element.querySelector(`.film-details__control-label--watchlist`)
+      .addEventListener(`click`, () => {
+        this._isWatchlist = !this._isWatchlist;
+
+        this.rerender();
+      });
+
+    element.querySelector(`.film-details__control-label--watched`)
+      .addEventListener(`click`, () => {
+        this.isWatched = !this.isWatched;
+
+        this.rerender();
+      });
+
+    element.querySelector(`.film-details__control-label--favorite`)
+      .addEventListener(`click`, () => {
+        this._isFavorite = !this._isFavorite;
+
+        this.rerender();
+      });
   }
 }

@@ -10,8 +10,8 @@ const Mode = {
 export default class MovieController {
   constructor(container, onDataChange, onViewChange) {
     this._container = container;
-    this._onDataChange = onDataChange; // ???
-    this._onViewChange = onViewChange; // ???
+    this._onDataChange = onDataChange;
+    this._onViewChange = onViewChange;
 
     this._mode = Mode.FILM;
 
@@ -38,21 +38,18 @@ export default class MovieController {
       this._onDataChange(this, film, Object.assign({}, film, {
         isWatchlist: !film.isWatchlist,
       }));
-      // this._replaceOldFilmCardToNew();
     });
 
     this._filmCardComponent.setWatchedButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
         isWatched: !film.isWatched,
       }));
-      // this._replaceOldFilmCardToNew();
     });
 
     this._filmCardComponent.setFavoriteButtonClickHandler(() => {
       this._onDataChange(this, film, Object.assign({}, film, {
         isFavorite: !film.isFavorite,
       }));
-      // this._replaceOldFilmCardToNew();
     });
 
     if (oldFilmCardComponent && oldFilmDetailsPopupComponent) {
@@ -60,12 +57,6 @@ export default class MovieController {
       replace(this._filmDetailsPopupComponent, oldFilmDetailsPopupComponent);
     } else {
       render(this._container, this._filmCardComponent, RenderPosition.BEFOREEND);
-    }
-  }
-
-  setFilmView() {
-    if (this._mode !== Mode.FILM) {
-      // this._replaceOldFilmCardToNew();
     }
   }
 

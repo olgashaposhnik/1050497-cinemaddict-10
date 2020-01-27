@@ -3,45 +3,11 @@
 import ShowMoreButtonComponent from '../components/show-more-button.js';
 import {SortType} from '../components/sort.js';
 import MovieController from './movie-controller.js';
-import {render, remove, RenderPosition} from '../mock/utils.js';
+import {render, RenderPosition} from '../mock/utils.js';
 const FILM_CARD_QUANTITY = 5;
 const TOP_RATED_MOVIES_QUANTITY = 2;
 const MOST_COMMENTED_MOVIES_QUANTITY = 2;
 const SHOWING_FILMS_QUANTITY_BY_BUTTON = 5;
-
-// const body = document.querySelector(`body`);
-
-// const renderFilm = (film, filmsContainer) => {
-//   const onEscKeyDown = (evt) => {
-//     const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-//     if (isEscKey) {
-//       removePopup();
-//       document.removeEventListener(`keydown`, onEscKeyDown);
-//     }
-//   };
-
-//   const removePopup = () => {
-//     document.querySelector(`.film-details`).remove();
-//   };
-
-//   const openPopup = (singleFilm) => {
-//     const filmPopup = new FilmDetailsPopupComponent(singleFilm);
-//     filmPopup.setClosePopupButtonClickHandler(() => {
-//       removePopup();
-//       document.removeEventListener(`keydown`, onEscKeyDown);
-//     });
-
-//     render(body, filmPopup, RenderPosition.BEFOREEND);
-//   };
-
-//   const filmCardComponent = new FilmCardComponent(film);
-//   filmCardComponent.setFilmCardClickHandler(() => {
-//     openPopup(film);
-//     document.addEventListener(`keydown`, onEscKeyDown);
-//   });
-
-//   render(filmsContainer, filmCardComponent, RenderPosition.BEFOREEND);
-// };
 
 const renderFilms = (filmsList, films, onDataChange, onViewChange) => {
   return films.map((film) => {
@@ -50,12 +16,6 @@ const renderFilms = (filmsList, films, onDataChange, onViewChange) => {
     return movieController;
   });
 };
-
-// const renderFilms = (container, films) => {
-//   films.forEach((film) => {
-//     renderFilm(film, container);
-//   });
-// };
 
 export default class PageController {
   constructor(container, sort) {
@@ -152,20 +112,8 @@ export default class PageController {
     }
 
     this._filmsListContainer.innerHTML = ``;
-    // return sortedFilms;
 
     renderFilms(this._filmsListContainer, sortedFilms.slice(0, this._showingFilms), this._onDataChange, this._onViewChange);
     this._renderShowMoreButton();
-
-    // renderFilms(this._filmsListContainer, sortedFilms.slice(0, this._showingFilms), this._onDataChange, this._onViewChange);
-    // // this._showedFilmControllers = newFilms;
-
-    // this._renderShowMoreButton();
-
-    // if (sortType === SortType.DEFAULT) {
-    //   this._renderShowMoreButton();
-    // } else {
-    //   remove(this._ShowMoreButtonComponent);
-    // }
   }
 }

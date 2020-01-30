@@ -31,3 +31,22 @@ const pageController = new PageController(filmsSection, sort);
 
 statisticsComponent.hide();
 pageController.render(films);
+
+siteMenu.setOnChange((menuItem) => {
+  switch (menuItem) {
+    case MenuItem.NEW_TASK:
+      siteMenu.setActiveItem(MenuItem.TASKS);
+      statisticsComponent.hide();
+      pageController.show();
+      pageController.createTask();
+      break;
+    case MenuItem.STATISTICS:
+      pageController.hide();
+      statisticsComponent.show();
+      break;
+    case MenuItem.TASKS:
+      statisticsComponent.hide();
+      pageController.show();
+      break;
+  }
+});

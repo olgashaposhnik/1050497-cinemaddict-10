@@ -1,6 +1,33 @@
-import AbstractComponent from './abstract-component.js';
+import AbstractSmartComponent from './abstract-smart-component.js';
 
-export default class Statistics extends AbstractComponent {
+const createStatisticsTemplate = ({movies, dateFrom, dateTo}) => {
+  const placeholder = createPlaceholder(dateFrom, dateTo);
+  const tasksCount = getTasksByDateRange(tasks, dateFrom, dateTo).length;
+
+export default class Statistics extends AbstractSmartComponent {
+  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, isWatchlist, isWatched, isFavorite}) {
+    super();
+
+    this._title = title;
+    this._rating = rating;
+    this._year = year;
+    this._duration = duration;
+    this._genres = genres;
+    this._image = image;
+    this._description = description;
+    this._comments = comments;
+    this._director = director;
+    this._writers = writers;
+    this._actors = actors;
+    this._releaseDate = releaseDate;
+    this._isWatchlist = isWatchlist;
+    this._isWatched = isWatched;
+    this._isFavorite = isFavorite;
+    this._сlosePopupButtonClickHandler = null;
+
+    this._subscribeOnEvents();
+  }
+
   getTemplate() {
     return (
       `

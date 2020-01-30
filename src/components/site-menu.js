@@ -1,6 +1,14 @@
 import {sortFilmsByOptions} from '../mock/sort.js';
 import AbstractComponent from './abstract-component.js';
 
+export const MenuItem = {
+  ALL_MOVIES: `all`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVOURITES: `favorites`,
+  STATISTICS: `stats`,
+};
+
 export default class SiteMenu extends AbstractComponent {
   constructor(filmCards) {
     super();
@@ -19,5 +27,25 @@ export default class SiteMenu extends AbstractComponent {
       </nav>
       `
     ).trim();
+  }
+
+  setActiveItem(menuItem) {
+    const item = this.getElement().querySelector(`href="#${menuItem}"`);
+
+    if (item) {
+      item.checked = true;
+    }
+  }
+
+  setOnChange(handler) {
+    this.getElement().addEventListener(`change`, (evt) => {
+      if (evt.target.tagName !== `A`) {
+        return;
+      }
+
+      const menuItem = evt.target.id;
+
+      handler(menuItem);
+    });
   }
 }

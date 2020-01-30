@@ -45,6 +45,14 @@ export default class PageController {
     this._sort.setSortTypeChangeHandler(this._onSortTypeChange);
   }
 
+  hide() {
+    this._container.hide();
+  }
+
+  show() {
+    this._container.show();
+  }
+
   render(filmCards) {
     this._filmCards = filmCards;
 

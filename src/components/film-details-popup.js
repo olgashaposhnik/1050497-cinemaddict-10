@@ -205,7 +205,8 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
   }
 
   setCreateCommentHandler(handler) {
-    // TODO: НЕ ЗАБЫТЬ РЕАЛИЗОВАТЬ ОБРАБОТЧИК!!!!!!!!!!!!!!!!
+    this.getElement().querySelector(`.film-details__inner`)
+      .addEventListener(`keydown`, handler);
   }
 
   _subscribeOnEvents() {

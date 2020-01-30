@@ -140,7 +140,7 @@ export default class PageController {
       this._moviesModel.removeFilm(oldData.id);
       this._updateFilms(this._showingFilms);
     } else {
-      const isSuccess = this._moviesModel.updateFilm(oldData.id, newData);
+      const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
       if (isSuccess) {
         movieController.render(newData, MovieControllerMode.COMMENT);
       }

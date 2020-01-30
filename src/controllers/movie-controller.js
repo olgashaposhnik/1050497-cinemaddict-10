@@ -27,7 +27,7 @@ export default class MovieController {
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
 
-    this._mode = Mode.FILM;
+    this._mode = Mode.POPUP;
 
     this._filmCardComponent = null;
     this._filmDetailsPopupComponent = null;
@@ -73,7 +73,7 @@ export default class MovieController {
       this._onDataChange(this, comment, data);
     });
 
-    switch (Mode) {
+    switch (this._mode) {
       case Mode.COMMENT:
         if (oldFilmDetailsPopupComponent && oldFilmCardComponent) {
           remove(oldFilmCardComponent);

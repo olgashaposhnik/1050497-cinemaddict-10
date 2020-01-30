@@ -2,7 +2,7 @@ import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsPopupComponent from '../components/film-details-popup.js';
 import {render, replace, remove, RenderPosition} from '../utils/utils.js';
 
-const Mode = {
+export const Mode = {
   COMMENT: `comment`,
   FILM: `film`,
   POPUP: `popup`,

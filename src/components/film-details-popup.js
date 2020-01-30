@@ -204,6 +204,10 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
     this._сlosePopupButtonClickHandler = handler;
   }
 
+  setCreateCommentHandler(handler) {
+    // TODO: НЕ ЗАБЫТЬ РЕАЛИЗОВАТЬ ОБРАБОТЧИК!!!!!!!!!!!!!!!!
+  }
+
   _subscribeOnEvents() {
     const element = this.getElement();
 

@@ -91,7 +91,7 @@ export default class PageController {
   }
 
   _renderShowMoreButton() {
-    remove(this._loadMoreButtonComponent); // ПРОВЕРИТЬ ЭТО!!!
+    remove(this._ShowMoreButtonComponent); // ПРОВЕРИТЬ ЭТО!!!
 
     if (this._showingFilms >= this._moviesModel.getMovies().length) {
       return;
@@ -112,7 +112,7 @@ export default class PageController {
     //   }
     // });
     render(this._filmsList, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
-    this._ShowMoreButtonComponent.setClickHandler(this._onShowMoreButtonClick);
+    this._ShowMoreButtonComponent.setShowMoreButtonClickHandler(this._onShowMoreButtonClick);
   }
 
   _updateFilms(count) {

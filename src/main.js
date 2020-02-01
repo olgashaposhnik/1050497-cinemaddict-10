@@ -19,7 +19,7 @@ const headerProfile = new HeaderProfileComponent();
 const siteMenu = new SiteMenuComponent(films);
 const sort = new SortComponent();
 const filmsSection = new FilmsSectionComponent();
-const statisticsComponent = new StatisticsComponent();
+const statisticsComponent = new StatisticsComponent(films);
 render(siteHeaderElement, headerProfile, RenderPosition.BEFOREEND);
 render(siteMainElement, siteMenu, RenderPosition.BEFOREEND);
 render(siteMainElement, sort, RenderPosition.BEFOREEND);

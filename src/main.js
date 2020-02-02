@@ -31,6 +31,7 @@ const pageController = new PageController(filmsSection, sort);
 
 statisticsComponent.hide();
 pageController.render(films);
+statisticsComponent.show();
 
 siteMenu.setOnChange((menuItem) => {
   switch (menuItem) {

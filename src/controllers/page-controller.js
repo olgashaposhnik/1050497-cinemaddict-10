@@ -36,17 +36,17 @@ export default class PageController {
     this._filmsTopRatedContainer = this._filmsListExtra[0].querySelector(`.films-list__container`);
     this._filmsMostCommentedContainer = this._filmsListExtra[1].querySelector(`.films-list__container`);
     this._onDataChange = this._onDataChange.bind(this);
-    this._onSortTypeChange = this._onSortTypeChange.bind(this);
+    this._onSortTypeChangeHandler = this._onSortTypeChange.bind(this);
     this._onViewChange = this._onViewChange.bind(this);
     this._onShowMoreButtonClick = this._onShowMoreButtonClick.bind(this);
-    this._onFilterChange = this._onFilterChange.bind(this);
+    this._onFilterChangeHandler = this._onFilterChange.bind(this);
     this._showingFilms = FILM_CARD_QUANTITY;
     this._topRatedFilms = TOP_RATED_MOVIES_QUANTITY;
     this._mostCommentedFilms = MOST_COMMENTED_MOVIES_QUANTITY;
     this._showingFilmsQuantityByButton = SHOWING_FILMS_QUANTITY_BY_BUTTON;
 
     this._sort.setSortTypeChangeHandler(this._onSortTypeChange);
-    this._moviesModel.setFilterChangeHandler(this._onFilterChange);
+    this._moviesModel.setFilterChangeHandler(this._onFilterChangeHandler);
   }
 
   render() {
@@ -69,13 +69,13 @@ export default class PageController {
       return;
     }
 
-    const filmsListContainer = this._filmsListContainer.getElement();
+    const filmsListContainer = this._filmsListContainer;
     this._creatingComment = new MovieController(filmsListContainer, this._onDataChange, this._onViewChange);
     this._creatingComment.render(EmptyComment, MovieControllerMode.COMMENT);
   }
 
   _removeFilms() {
-    const filmsListContainer = this._filmsListContainer.getElement();
+    const filmsListContainer = this._filmsListContainer;
     this._mainFilmControllers.forEach((movieController) => movieController.destroy());
 
     filmsListContainer.innerHTML = ``;
@@ -83,34 +83,18 @@ export default class PageController {
   }
 
   _renderFilms(filmCards) {
-    const filmsListContainer = this._filmsListContainer.getElement();
-
-    const newFilms = renderFilms(filmsListContainer, filmCards.slice(0, this._showingFilms), this._onDataChange, this._onViewChange);
+    const newFilms = renderFilms(this._filmsListContainer, filmCards.slice(0, this._showingFilms), this._onDataChange, this._onViewChange);
     this._mainFilmControllers = this._mainFilmControllers.concat(newFilms);
-    this._showingFilms = this._mainFilmControllers.length;
   }
 
   _renderShowMoreButton() {
-    remove(this._ShowMoreButtonComponent); // ПРОВЕРИТЬ ЭТО!!!
+    remove(this._ShowMoreButtonComponent);
 
     if (this._showingFilms >= this._moviesModel.getMovies().length) {
       return;
     }
 
     render(this._filmsList, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
-    // const showMoreButton = this._ShowMoreButtonComponent.getElement();
-    // const filmCards = this._moviesModel.getMovies();
-    // this._ShowMoreButtonComponent.setShowMoreButtonClickHandler(() => {
-    //   let prevFilmsCount = this._showingFilms;
-    //   this._showingFilms = this._showingFilms + this._showingFilmsQuantityByButton;
-
-    //   const newFilmsByButton = renderFilms(this._filmsListContainer, filmCards.slice(prevFilmsCount, this._showingFilms), this._onDataChange, this._onViewChange);
-    //   this._newFilmsByButtonControllers = this._newFilmsByButtonControllers.concat(newFilmsByButton);
-
-    //   if (this._showingFilms >= filmCards.length) {
-    //     showMoreButton.remove();
-    //   }
-    // });
     render(this._filmsList, this._ShowMoreButtonComponent, RenderPosition.BEFOREEND);
     this._ShowMoreButtonComponent.setShowMoreButtonClickHandler(this._onShowMoreButtonClick);
   }
@@ -199,8 +183,8 @@ export default class PageController {
   }
 
   _onFilterChange() {
-    this._removeMovies();
-    this._renderMovies(this._moviesModel.getMovies().slice(0, this._showingFilms));
+    this._removeFilms();
+    this._renderFilms(this._moviesModel.getMovies().slice(0, this._showingFilms));
     this._renderShowMoreButton();
     this._updateFilms(FILM_CARD_QUANTITY);
   }

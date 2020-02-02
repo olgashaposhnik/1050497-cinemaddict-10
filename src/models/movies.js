@@ -11,7 +11,9 @@ export default class Movies {
   }
 
   getMovies() {
+    console.log(getMoviesByFilter(this._movies, this._activeFilterType));
     return getMoviesByFilter(this._movies, this._activeFilterType);
+
   }
 
   getMoviesAll() {
@@ -26,6 +28,7 @@ export default class Movies {
     this._activeFilterType = filterType;
     this._callHandlers(this._filterChangeHandlers);
   }
+
   removeComment(id) {
     const index = this._movies.findIndex((it) => it.id === id);
 

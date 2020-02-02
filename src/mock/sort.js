@@ -11,7 +11,7 @@ const generateSorters = () => {
 };
 
 const sortFilmsByOptions = (array, key) => {
-  const filteredArray = array.filter((item) => item[key] === `true`);
+  const filteredArray = array.filter((item) => item[key]);
   return filteredArray.length;
 };
 

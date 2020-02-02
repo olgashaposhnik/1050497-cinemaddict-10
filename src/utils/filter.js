@@ -1,15 +1,15 @@
 import {FilterType} from '../const.js';
 
 const getInWatchlistMovies = (movies) => {
-  return movies.filter((movie) => movie.inWatchlist);
+  return movies.filter((movie) => movie.isWatchlist);
 };
 
 const getInHistoryMovies = (movies) => {
-  return movies.filter((movie) => movie.inHistory);
+  return movies.filter((movie) => movie.isHistory);
 };
 
 const getInFavouritesMovies = (movies) => {
-  return movies.filter((movie) => movie.inFavourites);
+  return movies.filter((movie) => movie.isFavourites);
 };
 
 export const getMoviesByFilter = (movies, filterType) => {
@@ -20,7 +20,7 @@ export const getMoviesByFilter = (movies, filterType) => {
       return getInWatchlistMovies(movies);
     case FilterType.HISTORY:
       return getInHistoryMovies(movies);
-    case FilterType.FAVORITES:
+    case FilterType.FAVOURITES:
       return getInFavouritesMovies(movies);
   }
 

@@ -1,7 +1,7 @@
 import AbstractComponent from './abstract-component.js';
 
 export default class FilmCard extends AbstractComponent {
-  constructor({title, rating, year, duration, genres, image, description, comments, isWatchlist, isWatched, isFavorite}) {
+  constructor({title, rating, year, duration, genres, image, description, comments, isWatchlist, isHistory, isFavourites}) {
     super();
 
     this._title = title;
@@ -13,8 +13,8 @@ export default class FilmCard extends AbstractComponent {
     this._description = description;
     this._comments = comments;
     this._isWatchlist = isWatchlist;
-    this._isWatched = isWatched;
-    this._isFavorite = isFavorite;
+    this._isHistory = isHistory;
+    this._isFavourites = isFavourites;
   }
 
   getTemplate() {
@@ -27,8 +27,8 @@ export default class FilmCard extends AbstractComponent {
     };
 
     const addToWatchlistButton = createButtonMarkup(`Add to watchlist`, `add-to-watchlist`, this._isWatchlist);
-    const markAsWatchedButton = createButtonMarkup(`Mark as watched`, `mark-as-watched`, this._isWatched);
-    const markAsFavoriteButton = createButtonMarkup(`Mark as favorite`, `favorite`, this._isFavorite);
+    const markAsWatchedButton = createButtonMarkup(`Mark as watched`, `mark-as-watched`, this._isHistory);
+    const markAsFavoriteButton = createButtonMarkup(`Mark as favorite`, `favorite`, this._isFavourites);
 
     return (
       `

@@ -1,4 +1,4 @@
-import {getRandomValues, getRandomInteger, createRandomValues, getRandomBool} from './utils.js';
+import {getRandomValues, getRandomInteger, createRandomValues, getRandomBool /* createUniqueValues */} from '../utils/utils.js';
 
 const filmsNames = [
   `Побег из Шоушенка`,
@@ -127,7 +127,6 @@ const Date = {
   MIN_MINUTE: 0,
   MAX_MINUTE: 59
 };
-
 
 const generateComment = () => {
   return {

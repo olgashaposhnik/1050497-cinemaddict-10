@@ -1,6 +1,14 @@
 import CommentsComponent from './comments.js';
-// import AbstractComponent from './abstract-component.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
+
+const parseFormData = (formData) => {
+  return {
+    text: formData.get(`text`),
+    emoji: formData.get(`emoji`),
+    author: formData.get(`author`),
+    date: formData.get(`date`),
+  };
+};
 
 export default class FilmDetailsPopup extends AbstractSmartComponent {
   constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, isWatchlist, isWatched, isFavorite}) {
@@ -22,6 +30,7 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
     this._isWatched = isWatched;
     this._isFavorite = isFavorite;
     this._сlosePopupButtonClickHandler = null;
+    this._deleteButtonClickHandler = null;
 
     this._subscribeOnEvents();
   }
@@ -155,6 +164,7 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
 
   recoveryListeners() {
     this.setClosePopupButtonClickHandler(this._сlosePopupButtonClickHandler);
+    this.setDeleteButtonClickHandler(this._deleteButtonClickHandler);
     this._subscribeOnEvents();
   }
 
@@ -172,11 +182,30 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
     this.rerender();
   }
 
+  getData() {
+    const form = this.getElement().querySelector(`.film-details__inner`);
+    const formData = new FormData(form);
+
+    return parseFormData(formData);
+  }
+
+  setDeleteButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__comment-delete`)
+      .addEventListener(`click`, handler);
+
+    this._deleteButtonClickHandler = handler;
+  }
+
   setClosePopupButtonClickHandler(handler) {
     this.getElement().querySelector(`.film-details__close-btn`)
       .addEventListener(`click`, handler);
 
     this._сlosePopupButtonClickHandler = handler;
+  }
+
+  setCreateCommentHandler(handler) {
+    this.getElement().querySelector(`.film-details__inner`)
+      .addEventListener(`keydown`, handler);
   }
 
   _subscribeOnEvents() {

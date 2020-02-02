@@ -5,17 +5,17 @@ import moment from 'moment';
 
 const MINUTES_PER_HOUR = 60;
 
-const getWathedFilms = (films, inHistory) => {
-  return films.filter((item) => item[inHistory] === `true`);
+const getWatсhedFilms = (films) => {
+  return films.filter((item) => item.isHistory === true);
 };
 
 const sortFilmsByOptions = (films, key) => {
-  const filteredArray = films.filter((item) => item[key] === `true`);
+  const filteredArray = films.filter((item) => item[key] === true);
   return filteredArray.length;
 };
 
-const getWathedFilmsDuration = (films) => {
-  const wathedFilms = getWathedFilms(films);
+const getWatсhedFilmsDuration = (films) => {
+  const wathedFilms = getWatсhedFilms(films);
 
   return wathedFilms.reduce((sum, item) => {
     return sum + item.duration;
@@ -23,7 +23,7 @@ const getWathedFilmsDuration = (films) => {
 };
 
 const getDurationInHours = (films) => {
-  const totalDuration = getWathedFilmsDuration(films);
+  const totalDuration = getWatсhedFilmsDuration(films);
   return Math.floor(totalDuration / MINUTES_PER_HOUR);
 };
 
@@ -34,7 +34,7 @@ const getDurationInMinutes = (films) => {
 };
 
 const getGenres = (films) => {
-  const wathedFilms = getWathedFilms(films);
+  const wathedFilms = getWatсhedFilms(films);
   const genres = {};
 
   wathedFilms.forEach((film) => {
@@ -198,6 +198,12 @@ export default class Statistics extends AbstractSmartComponent {
   }
 
   recoveryListeners() {}
+
+  show() {
+    super.show();
+
+    this.rerender();
+  }
 
   rerender() {
     this._setGeneralStatistic();

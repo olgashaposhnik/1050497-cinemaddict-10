@@ -1,5 +1,13 @@
 import AbstractComponent from './abstract-component.js';
 
+const MINUTES_IN_HOUR = 60;
+
+const calculateMinutesToHours = (duration) => {
+  const hours = Math.floor(duration / MINUTES_IN_HOUR);
+  const minutes = duration - hours * MINUTES_IN_HOUR;
+  return hours + `h ` + minutes + `m`;
+};
+
 export default class FilmCard extends AbstractComponent {
   constructor({title, rating, year, duration, genres, image, description, comments, isWatchlist, isWatched, isFavorite}) {
     super();
@@ -37,7 +45,7 @@ export default class FilmCard extends AbstractComponent {
         <p class="film-card__rating">${this._rating}</p>
         <p class="film-card__info">
           <span class="film-card__year">${this._year}</span>
-          <span class="film-card__duration">${this._duration}</span>
+          <span class="film-card__duration">${calculateMinutesToHours(this._duration)}</span>
           <span class="film-card__genre">${this._genres[0]}</span>
         </p>
         <img src="${this._image}" alt="" class="film-card__poster">

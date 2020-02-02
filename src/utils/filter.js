@@ -15,7 +15,7 @@ const getInFavouritesMovies = (movies) => {
 export const getMoviesByFilter = (movies, filterType) => {
   switch (filterType) {
     case FilterType.ALL:
-      return movies; // ПРОВЕРИТЬ!!!!!!!!!!!!!
+      return movies;
     case FilterType.WATCHLIST:
       return getInWatchlistMovies(movies);
     case FilterType.HISTORY:

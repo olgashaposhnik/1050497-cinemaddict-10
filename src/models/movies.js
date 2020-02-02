@@ -11,7 +11,6 @@ export default class Movies {
   }
 
   getMovies() {
-    console.log(getMoviesByFilter(this._movies, this._activeFilterType));
     return getMoviesByFilter(this._movies, this._activeFilterType);
 
   }

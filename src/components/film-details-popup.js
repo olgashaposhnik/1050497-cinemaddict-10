@@ -1,5 +1,4 @@
 import CommentsComponent from './comments.js';
-// import AbstractComponent from './abstract-component.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
 const parseFormData = (formData) => {

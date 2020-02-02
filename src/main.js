@@ -1,9 +1,7 @@
 import HeaderProfileComponent from './components/header-profile.js';
-// import SiteMenuComponent from './components/site-menu.js';
 import FilterController from './controllers/filter.js';
 import SortComponent from './components/sort.js';
 import FilmsSectionComponent from './components/films-section.js';
-// import FilmDetailsPopupComponent from './components/film-details-popup.js';
 import PageController from './controllers/page-controller.js';
 import FooterComponent from './components/footer.js';
 import MoviesModel from './models/movies.js';
@@ -20,16 +18,6 @@ const moviesModel = new MoviesModel();
 moviesModel.setMovies(films);
 
 const headerProfile = new HeaderProfileComponent();
-// const siteMenu = new SiteMenuComponent(films);
-
-// const filmDetailsPopupComponent = new FilmDetailsPopupComponent(film);
-
-// filmDetailsPopupComponent.getElement().querySelector(`.film-details__new-comment`)
-//   .addEventListener(`click`, () => {
-//     pageController.createComment();
-//   });
-
-// render(filmsSection, filmDetailsPopupComponent, RenderPosition.BEFOREEND);
 
 const filterController = new FilterController(siteMainElement, moviesModel);
 filterController.render();
@@ -37,7 +25,6 @@ filterController.render();
 const sort = new SortComponent();
 const filmsSection = new FilmsSectionComponent();
 render(siteHeaderElement, headerProfile, RenderPosition.BEFOREEND);
-// render(siteMainElement, siteMenu, RenderPosition.BEFOREEND);
 render(siteMainElement, sort, RenderPosition.BEFOREEND);
 render(siteMainElement, filmsSection, RenderPosition.BEFOREEND);
 render(siteMainElement, new FooterComponent(films), RenderPosition.BEFOREEND);

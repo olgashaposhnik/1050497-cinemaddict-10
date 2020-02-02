@@ -128,11 +128,6 @@ const Date = {
   MAX_MINUTE: 59
 };
 
-const Id = {
-  MIN: 0,
-  MAX: 15
-};
-
 const generateComment = () => {
   return {
     text: getRandomValues(commentsText),
@@ -150,8 +145,6 @@ const generateComments = (count) => {
 
 const generateFilmCard = () => {
   return {
-    // id: createUniqueValues(Id), // изменить!!!!!
-    id: getRandomInteger(Id.MIN, Id.MAX),
     title: getRandomValues(filmsNames),
     rating: getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) + getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) / 10,
     year: getRandomInteger(years.MIN, years.MAX),

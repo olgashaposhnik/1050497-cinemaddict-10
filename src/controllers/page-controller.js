@@ -1,5 +1,3 @@
-// import FilmCardComponent from '../components/film-card.js';
-// import FilmDetailsPopupComponent from '../components/film-details-popup.js';
 import ShowMoreButtonComponent from '../components/show-more-button.js';
 import {SortType} from '../components/sort.js';
 import MovieController, {Mode as MovieControllerMode, EmptyComment} from './movie-controller.js';
@@ -131,13 +129,6 @@ export default class PageController {
     }
   }
 
-  // _onDataChange(movieController, oldData, newData) {
-  //   const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
-  //   if (isSuccess) {
-  //     movieController.render(newData);
-  //   }
-  // }
-
   _onViewChange() {
     this._mainFilmControllers.forEach((it) => it.setDefaultView());
   }
@@ -158,9 +149,6 @@ export default class PageController {
         break;
     }
 
-    // this._filmsListContainer.innerHTML = ``;
-
-    // renderFilms(this._filmsListContainer, sortedFilms.slice(0, this._showingFilms), this._onDataChange, this._onViewChange);
     this._removeTasks();
     this._renderTasks(sortedFilms);
     this._renderShowMoreButton();

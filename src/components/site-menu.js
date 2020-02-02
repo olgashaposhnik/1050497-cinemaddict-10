@@ -2,12 +2,6 @@ import {sortFilmsByOptions} from '../mock/sort.js';
 import AbstractComponent from './abstract-component.js';
 import {FilterType} from '../const.js';
 
-// const FILTER_ID_PREFIX = `filter__`;
-
-// const getFilterNameById = (id) => {
-//   return id.substring(FILTER_ID_PREFIX.length);
-// };
-
 export default class SiteMenu extends AbstractComponent {
   constructor(filmCards) {
     super();
@@ -30,8 +24,6 @@ export default class SiteMenu extends AbstractComponent {
 
   setFilterChangeHandler(handler) {
     this.getElement().addEventListener(`click`, (evt) => {
-      // evt.target.dataset.FilterType
-      // const filterName = getFilterNameById(evt.target.id);
       handler(evt.target.dataset.filterType);
     });
   }

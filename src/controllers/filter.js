@@ -1,7 +1,6 @@
 import SiteMenuComponent from '../components/site-menu.js'; // было filter
 import {render, replace, RenderPosition} from '../utils/utils.js';
 import {FilterType} from '../const.js';
-import {getMoviesByFilter} from '../utils/filter.js';
 
 export default class FilterController {
   constructor(container, moviesModel) {
@@ -17,16 +16,9 @@ export default class FilterController {
   render() {
     const container = this._container;
     const allMovies = this._moviesModel.getMoviesAll();
-    // const filters = Object.values(FilterType).map((filterType) => {
-    //   return {
-    //     name: filterType,
-    //     count: getMoviesByFilter(allMovies, filterType).length,
-    //     checked: filterType === this._activeFilterType,
-    //   };
-    // });
     const oldComponent = this._filterComponent;
 
-    this._filterComponent = new SiteMenuComponent(allMovies); // ПЕРЕПИСАТЬ КОМПОНЕНТ!!!
+    this._filterComponent = new SiteMenuComponent(allMovies);
     this._filterComponent.setFilterChangeHandler(this._onFilterChange);
 
     if (oldComponent) {

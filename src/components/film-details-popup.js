@@ -1,15 +1,6 @@
 import CommentsComponent from './comments.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
-const parseFormData = (formData) => {
-  return {
-    text: formData.get(`text`),
-    emoji: formData.get(`emoji`),
-    author: formData.get(`author`),
-    date: formData.get(`date`),
-  };
-};
-
 export default class FilmDetailsPopup extends AbstractSmartComponent {
   constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, isWatchlist, isWatched, isFavorite}) {
     super();
@@ -184,9 +175,10 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
 
   getData() {
     const form = this.getElement().querySelector(`.film-details__inner`);
-    const formData = new FormData(form);
+    // const formData = new FormData(form);
 
-    return parseFormData(formData);
+    // return parseFormData(formData);
+    return new FormData(form);
   }
 
   setDeleteButtonClickHandler(handler) {

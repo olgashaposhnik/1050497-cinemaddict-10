@@ -16,10 +16,11 @@ const renderFilms = (filmsList, films, onDataChange, onViewChange) => {
 };
 
 export default class PageController {
-  constructor(container, sort, moviesModel) {
+  constructor(container, sort, moviesModel, api) {
     this._container = container;
     this._sort = sort;
     this._moviesModel = moviesModel;
+    this._api = api;
 
     this._mainFilmControllers = [];
     this._topRatedFilmControllers = [];
@@ -130,10 +131,19 @@ export default class PageController {
       this._moviesModel.removeFilm(oldData.id);
       this._updateFilms(this._showingFilms);
     } else {
-      const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
-      if (isSuccess) {
-        movieController.render(newData, MovieControllerMode.COMMENT);
-      }
+      // const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
+      // if (isSuccess) {
+      //   movieController.render(newData, MovieControllerMode.COMMENT);
+      // }
+      this._api.updateFilm(oldData.id, newData)
+        .then((moviesModel) => {
+          const isSuccess = this._moviesModel.updateTask(oldData.id, moviesModel);
+
+          if (isSuccess) {
+            movieController.render(moviesModel, MovieControllerMode.DEFAULT);
+            this._updateTasks(this._showingFilms);
+          }
+        });
     }
   }
 

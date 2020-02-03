@@ -1,5 +1,6 @@
 import FilmCardComponent from '../components/film-card.js';
 import FilmDetailsPopupComponent from '../components/film-details-popup.js';
+import MovieModel from '../models/movie.js';
 import {render, replace, remove, RenderPosition} from '../utils/utils.js';
 
 export const Mode = {
@@ -19,6 +20,15 @@ export const EmptyComment = {
   },
   author: ``,
   date: null,
+};
+
+const parseFormData = (formData) => {
+  return new MovieModel({
+    text: formData.get(`text`),
+    emoji: formData.get(`emoji`),
+    author: formData.get(`author`),
+    date: formData.get(`date`),
+  });
 };
 
 export default class MovieController {
@@ -50,26 +60,40 @@ export default class MovieController {
     });
 
     this._filmCardComponent.setWatchlistButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign({}, film, {
-        isWatchlist: !film.isWatchlist,
-      }));
+      // this._onDataChange(this, film, Object.assign({}, film, {
+      //   isWatchlist: !film.isWatchlist,
+      // }));
+      const newFilm = MovieModel.clone(film);
+      newFilm.isWatchlist = !newFilm.isWatchlist;
+
+      this._onDataChange(this, film, newFilm);
     });
 
     this._filmCardComponent.setWatchedButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign({}, film, {
-        isWatched: !film.isWatched,
-      }));
+      // this._onDataChange(this, film, Object.assign({}, film, {
+      //   isWatched: !film.isWatched,
+      // }));
+      const newFilm = MovieModel.clone(film);
+      newFilm.isWatched = !newFilm.isWatched;
+
+      this._onDataChange(this, film, newFilm);
     });
 
     this._filmCardComponent.setFavoriteButtonClickHandler(() => {
-      this._onDataChange(this, film, Object.assign({}, film, {
-        isFavorite: !film.isFavorite,
-      }));
+      // this._onDataChange(this, film, Object.assign({}, film, {
+      //   isFavorite: !film.isFavorite,
+      // }));
+      const newFilm = MovieModel.clone(film);
+      newFilm.isFavorite = !newFilm.isFavorite;
+
+      this._onDataChange(this, film, newFilm);
     });
 
     this._filmDetailsPopupComponent.setCreateCommentHandler((evt) => {
       evt.preventDefault();
-      const data = this._filmDetailsPopupComponent.getData();
+      // const data = this._filmDetailsPopupComponent.getData();
+      const formData = this._filmDetailsPopupComponent.getData();
+      const data = parseFormData(formData);
       this._onDataChange(this, comment, data);
     });
 

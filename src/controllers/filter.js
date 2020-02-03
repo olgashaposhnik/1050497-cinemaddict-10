@@ -1,4 +1,4 @@
-import SiteMenuComponent from '../components/site-menu.js'; // было filter
+import SiteMenuComponent from '../components/site-menu.js';
 import {render, replace, RenderPosition} from '../utils/utils.js';
 import {FilterType} from '../const.js';
 

@@ -3,5 +3,6 @@ export const FilterType = {
   WATCHLIST: `inWatchlist`,
   HISTORY: `inHistory`,
   FAVOURITES: `inFavourites`,
+  STATISTICS: `stats`,
 };
 

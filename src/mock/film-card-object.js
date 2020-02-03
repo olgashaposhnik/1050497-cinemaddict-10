@@ -75,13 +75,6 @@ const years = {
   MAX: 2019
 };
 
-const Duration = {
-  HOURS_MIN: 1,
-  HOURS_MAX: 2,
-  MINUTES_MIN: 0,
-  MINUTES_MAX: 59
-};
-
 const СommentsCount = {
   MIN: 0,
   MAX: 30
@@ -148,7 +141,7 @@ const generateFilmCard = () => {
     title: getRandomValues(filmsNames),
     rating: getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) + getRandomInteger(filmsRatings.MIN, filmsRatings.MAX) / 10,
     year: getRandomInteger(years.MIN, years.MAX),
-    duration: getRandomInteger(Duration.HOURS_MIN, Duration.HOURS_MAX) + `h ` + getRandomInteger(Duration.MINUTES_MIN, Duration.MINUTES_MAX) + `m`,
+    duration: getRandomInteger(60, 300),
     genres: createRandomValues(filmsGenres, 1, 3),
     image: `./images/posters/` + getRandomValues(filmsImages),
     description: createRandomValues(filmsDescriptions, 1, 3),

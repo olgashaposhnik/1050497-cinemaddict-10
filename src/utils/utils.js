@@ -1,5 +1,7 @@
+import moment from 'moment';
+
 const formatTime = (date) => {
-  return window.moment(date).format(`hh:mm A`); // проверить, тот ли формат
+  return moment(date).format(`hh:mm`);
 };
 
 const formatDate = (date) => {

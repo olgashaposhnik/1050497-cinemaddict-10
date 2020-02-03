@@ -5,7 +5,7 @@ const formatTime = (date) => {
 };
 
 const formatDate = (date) => {
-  return moment(date).format(`DD MMMM YYYY`);
+  return window.moment(date).format(`DD MMMM YYYY`);
 };
 
 const RenderPosition = {
@@ -85,4 +85,20 @@ const createRandomValues = function (values, valuesMin, valuesMax) {
   return valueNumbers;
 };
 
-export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, replace, remove, formatTime, formatDate, getRandomBool};
+// const createUniqueValues = function (arr) {
+//   let result = [];
+
+//   for (let str of arr) {
+//     if (!result.includes(str)) {
+//       result.push(str);
+//     }
+//   }
+
+//   return result;
+// };
+
+const isFilterType = (filterType) => {
+  return Object.values(filterType).some(Boolean);
+};
+
+export {getRandomInteger, getRandomValues, createRandomValues, RenderPosition, createElement, render, replace, remove, formatTime, formatDate, getRandomBool, isFilterType};

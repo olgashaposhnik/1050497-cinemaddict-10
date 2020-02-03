@@ -1,4 +1,4 @@
-import {getRandomValues, getRandomInteger, createRandomValues, getRandomBool} from './utils.js';
+import {getRandomValues, getRandomInteger, createRandomValues, getRandomBool /* createUniqueValues */} from '../utils/utils.js';
 
 const filmsNames = [
   `Побег из Шоушенка`,

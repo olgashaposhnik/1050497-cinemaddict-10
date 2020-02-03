@@ -1,4 +1,4 @@
-import {createElement} from '../mock/utils.js';
+import {createElement} from '../utils/utils.js';
 
 const HIDDEN_CLASS = `visually-hidden`;
 

@@ -66,6 +66,6 @@ export default class Movies {
   }
 
   _callHandlers(handlers) {
-    handlers.forEach((handler) => handler());
+    handlers.forEach((handler) => handler(this._activeFilterType));
   }
 }

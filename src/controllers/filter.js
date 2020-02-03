@@ -28,32 +28,6 @@ export default class FilterController {
     }
   }
 
-  onMainNavFilterChange(menuItem) {
-    switch (menuItem) {
-      case menuItem.ALL_MOVIES:
-        this._filterComponent.setActiveItem(menuItem.ALL_MOVIES);
-        statisticsComponent.hide();
-        pageController.show();
-        break;
-      case menuItem.WATCHLIST:
-        statisticsComponent.hide();
-        pageController.show();
-        break;
-      case menuItem.HISTORY:
-        statisticsComponent.hide();
-        pageController.show();
-        break;
-      case menuItem.FAVOURITES:
-        statisticsComponent.hide();
-        pageController.show();
-        break;
-      case menuItem.STATISTICS:
-        pageController.hide();
-        statisticsComponent.show();
-        break;
-    }
-  }
-
   _onFilterChange(filterType) {
     this._moviesModel.setFilter(filterType);
     this._activeFilterType = filterType;

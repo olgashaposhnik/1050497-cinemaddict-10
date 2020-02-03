@@ -77,6 +77,21 @@ const getWatchedByYearFilms = (films) => {
   return films.filter((it) => moment(it.watchingDate).isAfter(begin._d));
 };
 
+const getStatisticMarkup = (films) => {
+  return `<li class="statistic__text-item">
+    <h4 class="statistic__item-title">You watched</h4>
+    <p class="statistic__item-text">${sortFilmsByOptions(films, `isHistory`)} <span class="statistic__item-description">movies</span></p>
+  </li>
+  <li class="statistic__text-item">
+    <h4 class="statistic__item-title">Total duration</h4>
+    <p class="statistic__item-text">${getDurationInHours(films)} <span class="statistic__item-description">h</span> ${getDurationInMinutes(films)} <span class="statistic__item-description">m</span></p>
+  </li>
+  <li class="statistic__text-item">
+    <h4 class="statistic__item-title">Top genre</h4>
+    <p class="statistic__item-text">${getFavouriteGenre(films)}</p>
+  </li>`;
+};
+
 export default class Statistics extends AbstractSmartComponent {
   constructor(movies) {
     super();
@@ -116,18 +131,7 @@ export default class Statistics extends AbstractSmartComponent {
       </form>
 
       <ul class="statistic__text-list">
-        <li class="statistic__text-item">
-          <h4 class="statistic__item-title">You watched</h4>
-          <p class="statistic__item-text">${sortFilmsByOptions(this._movies, `isHistory`)} <span class="statistic__item-description">movies</span></p>
-        </li>
-        <li class="statistic__text-item">
-          <h4 class="statistic__item-title">Total duration</h4>
-          <p class="statistic__item-text">${getDurationInHours(this._movies)} <span class="statistic__item-description">h</span> ${getDurationInMinutes(this._movies)} <span class="statistic__item-description">m</span></p>
-        </li>
-        <li class="statistic__text-item">
-          <h4 class="statistic__item-title">Top genre</h4>
-          <p class="statistic__item-text">${getFavouriteGenre(this._movies)}</p>
-        </li>
+        ${getStatisticMarkup(this._movies)}
       </ul>
 
       <div class="statistic__chart-wrap">
@@ -218,20 +222,6 @@ export default class Statistics extends AbstractSmartComponent {
     });
   }
 
-  // _renderCharts() {
-  //   const element = this.getElement();
-
-  //   const daysCtx = element.querySelector(`.statistic__days`);
-  //   const tagsCtx = element.querySelector(`.statistic__tags`);
-  //   const colorsCtx = element.querySelector(`.statistic__colors`);
-
-  //   this._resetChart();
-
-  //   // this._daysChart = renderDaysChart(daysCtx, this._tasks.getTasks(), this._dateFrom, this._dateTo);
-  //   // this._tagsChart = renderTagsChart(tagsCtx, this._tasks.getTasks());
-  //   // this._colorsChart = renderColorsChart(colorsCtx, this._tasks.getTasks());
-  // }
-
   _resetChart() {
     if (this._chart) {
       this._chart.destroy();
@@ -268,6 +258,6 @@ export default class Statistics extends AbstractSmartComponent {
     const statisticTextList = this.getElement().querySelector(`.statistic__text-list`);
 
     statisticTextList.innerHTML = ``;
-    statisticTextList.innerHTML = this._getFilteredFilms();
+    statisticTextList.innerHTML = getStatisticMarkup(this._getFilteredFilms());
   }
 }

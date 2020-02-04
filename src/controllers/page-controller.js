@@ -119,17 +119,33 @@ export default class PageController {
         movieController.destroy();
         this._updateFilms(this._showingFilms);
       } else {
-        this._moviesModel.addComment(newData);
-        movieController.render(newData, MovieControllerMode.COMMENT);
+        // this._moviesModel.addComment(newData);
+        // movieController.render(newData, MovieControllerMode.COMMENT);
+        this._api.сreateComment(newData)
+          .then((moviesModel) => {
+            this._moviesModel.addComment(moviesModel);
+            movieController.render(moviesModel, MovieControllerMode.DEFAULT);
 
-        const destroyedFilm = this._mainFilmControllers.pop();
-        destroyedFilm.destroy();
-        this._mainFilmControllers = [].concat(movieController, this._mainFilmControllers);
-        this._showingFilms = this._mainFilmControllers.length;
+            const destroyedFilm = this._mainFilmControllers.pop();
+            destroyedFilm.destroy();
+            this._mainFilmControllers = [].concat(movieController, this._mainFilmControllers);
+            this._showingFilms = this._mainFilmControllers.length;
+          })
+            .catch(() => {
+              movieController.shake();
+            });
       }
     } else if (newData === null) {
-      this._moviesModel.removeFilm(oldData.id);
-      this._updateFilms(this._showingFilms);
+      // this._moviesModel.removeFilm(oldData.id);
+      // this._updateFilms(this._showingFilms);
+      this._api.deleteComment(oldData.id)
+        .then(() => {
+          this._moviesModel.removeFilm(oldData.id);
+          this._updateFilms(this._showingFilms);
+        })
+        .catch(() => {
+          movieController.shake();
+        });
     } else {
       // const isSuccess = this._moviesModel.updateMovie(oldData.id, newData);
       // if (isSuccess) {
@@ -143,6 +159,9 @@ export default class PageController {
             movieController.render(moviesModel, MovieControllerMode.DEFAULT);
             this._updateTasks(this._showingFilms);
           }
+        })
+        .catch(() => {
+          movieController.shake();
         });
     }
   }

@@ -9,6 +9,8 @@ export const Mode = {
   POPUP: `popup`,
 };
 
+const SHAKE_ANIMATION_TIMEOUT = 600;
+
 export const EmptyComment = {
   text: ``,
   emoji: {
@@ -92,9 +94,20 @@ export default class MovieController {
     this._filmDetailsPopupComponent.setCreateCommentHandler((evt) => {
       evt.preventDefault();
       // const data = this._filmDetailsPopupComponent.getData();
+      this._filmDetailsPopupComponent.setData({
+        saveButtonText: `Saving...`, // нет там кнопки же((((
+      });
       const formData = this._filmDetailsPopupComponent.getData();
       const data = parseFormData(formData);
       this._onDataChange(this, comment, data);
+    });
+
+    this._filmDetailsPopupComponent.setDeleteCommentHandler(() => {
+      this._filmDetailsPopupComponent.setData({
+        deleteButtonText: `Deleting...`,
+      });
+
+      this._onDataChange(this, film, null);
     });
 
     switch (this._mode) {
@@ -121,6 +134,21 @@ export default class MovieController {
     remove(this._filmDetailsPopupComponent);
     remove(this._filmCardComponent);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
+  }
+
+  shake() {
+    this._filmDetailsPopupComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+    this._filmCardComponent.getElement().style.animation = `shake ${SHAKE_ANIMATION_TIMEOUT / 1000}s`;
+
+    setTimeout(() => {
+      this._filmDetailsPopupComponent.getElement().style.animation = ``;
+      this._filmCardComponent.getElement().style.animation = ``;
+
+      this._filmDetailsPopupComponent.setData({
+        saveButtonText: `Save`,
+        deleteButtonText: `Delete`,
+      });
+    }, SHAKE_ANIMATION_TIMEOUT);
   }
 
   _replaceFilmToPopup() {

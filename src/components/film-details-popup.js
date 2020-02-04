@@ -1,8 +1,13 @@
 import CommentsComponent from './comments.js';
 import AbstractSmartComponent from './abstract-smart-component.js';
 
+const DefaultData = {
+  deleteButtonText: `Delete`,
+  saveButtonText: `Save`,
+};
+
 export default class FilmDetailsPopup extends AbstractSmartComponent {
-  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, isWatchlist, isWatched, isFavorite}) {
+  constructor({title, rating, year, duration, genres, image, description, comments, director, writers, actors, releaseDate, isWatchlist, isWatched, isFavorite, externalData}) {
     super();
 
     this._title = title;
@@ -20,6 +25,7 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
     this._isWatchlist = isWatchlist;
     this._isWatched = isWatched;
     this._isFavorite = isFavorite;
+    this._externalData = externalData;
     this._сlosePopupButtonClickHandler = null;
     this._deleteButtonClickHandler = null;
 
@@ -30,6 +36,8 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
     const inWatchlistClass = this._isWatchlist ? `film-isInWatchlist` : ``;
     const isWatchedClass = this._isWatched ? `film-isWatched` : ``;
     const isFavoriteClass = this._isFavorite ? `film-isFavorite` : ``;
+    const deleteButtonText = this._externalData.deleteButtonText;
+    const saveButtonText = this._externalData.saveButtonText;
 
     return (
       `
@@ -198,6 +206,16 @@ export default class FilmDetailsPopup extends AbstractSmartComponent {
   setCreateCommentHandler(handler) {
     this.getElement().querySelector(`.film-details__inner`)
       .addEventListener(`keydown`, handler);
+  }
+
+  setDeleteCommentHandler(handler) {
+    this.getElement().querySelector(`.film-details__inner`) // нет там кнопки удалить
+      .addEventListener(`keydown`, handler);
+  }
+
+  setData(data) {
+    this._externalData = Object.assign({}, DefaultData, data);
+    this.rerender();
   }
 
   _subscribeOnEvents() {

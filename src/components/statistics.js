@@ -93,10 +93,10 @@ const getStatisticMarkup = (films) => {
 };
 
 export default class Statistics extends AbstractSmartComponent {
-  constructor(movies) {
+  constructor() {
     super();
 
-    this._movies = movies;
+    this._movies = [];
 
     this._сhart = null;
   }
@@ -141,6 +141,11 @@ export default class Statistics extends AbstractSmartComponent {
     </section>
       `
     ).trim();
+  }
+
+  setFilms(movies) {
+    this._movies = movies;
+    this.rerender();
   }
 
   renderChart() {

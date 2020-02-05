@@ -93,10 +93,17 @@ export default class MovieController {
 
     this._filmDetailsPopupComponent.setCreateCommentHandler((evt) => {
       evt.preventDefault();
-      // const data = this._filmDetailsPopupComponent.getData();
-      this._filmDetailsPopupComponent.setData({
-        saveButtonText: `Saving...`, // нет там кнопки же((((
-      });
+      // const isCtrlKey = evt.key === `17` || evt.key === `ctrl`;
+      if (evt.ctrlKey && evt.keyCode === 13) {
+        this._filmDetailsPopupComponent.setData();
+        //   // saveButtonText: `Saving...`, // нет там кнопки же((((
+        // });
+      }
+      // if (evt.isEscKey) {} // TODO проверить, нажата ли кнопка ctrl и enter
+      // // const data = this._filmDetailsPopupComponent.getData();
+      // this._filmDetailsPopupComponent.setData({
+      //   saveButtonText: `Saving...`, // нет там кнопки же((((
+      // });
       const formData = this._filmDetailsPopupComponent.getData();
       const data = parseFormData(formData);
       this._onDataChange(this, comment, data);

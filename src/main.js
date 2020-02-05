@@ -13,12 +13,12 @@ import {FilterType} from './const.js';
 
 // const FILM_LIST_CARD_QUANTITY = 15;
 
+const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
+const AUTHORIZATION = `Basic eo0w590ik29889a`;
 const api = new API(END_POINT, AUTHORIZATION);
 const moviesModel = new MoviesModel();
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = document.querySelector(`.header`);
-const AUTHORIZATION = `Basic eo0w590ik29889a`;
-const END_POINT = `https://htmlacademy-es-10.appspot.com/cinemaddict`;
 
 // const films = generateFilmCards(FILM_LIST_CARD_QUANTITY);
 // moviesModel.setMovies(films);
@@ -33,12 +33,11 @@ filterController.render();
 
 const sort = new SortComponent();
 const filmsSection = new FilmsSectionComponent();
-const statisticsComponent = new StatisticsComponent(films);
+const statisticsComponent = new StatisticsComponent();
+render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
 render(siteHeaderElement, headerProfile, RenderPosition.BEFOREEND);
 render(siteMainElement, sort, RenderPosition.BEFOREEND);
 render(siteMainElement, filmsSection, RenderPosition.BEFOREEND);
-render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
-render(siteMainElement, new FooterComponent(films), RenderPosition.BEFOREEND);
 
 const pageController = new PageController(filmsSection, sort, moviesModel);
 
@@ -62,12 +61,14 @@ const onMainNavFilterChange = (item) => {
 
 api.getFilms()
   .then((films) => {
-    moviesModel.setTasks(films);
-    pageController.render();
-
+    moviesModel.setMovies(films);
+    pageController.render(films);
+    statisticsComponent.setFilms(films);
+    render(siteMainElement, new FooterComponent(films), RenderPosition.BEFOREEND);
     // const movies = new Movies(films);
 
     // drawIndexMarkup(movies, films, api);
     // renderFooterStatistic(films);
   });
+
 
